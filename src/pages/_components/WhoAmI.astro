@@ -78,11 +78,11 @@ const arsenal = [
   </div>
 
   {/* Bento Cards */}
-  <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-6">
+  <div class="mt-6 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-6">
     {/* Bio Card */}
     <div
       data-bento-card
-      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-4"
+      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 md:col-span-4"
     >
       <div>
         <span class="flex w-fit items-center gap-2 rounded-full border border-zinc-300 px-2.5 py-1 font-mono text-xs tracking-tight text-zinc-600">
@@ -138,7 +138,7 @@ const arsenal = [
     {/* Latest Activity Card */}
     <div
       data-bento-card
-      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-2"
+      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 md:col-span-2"
     >
       <div>
         <div class="flex items-center justify-between">
@@ -177,7 +177,7 @@ const arsenal = [
     {/* Stats */}
     <div
       data-bento-card
-      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-2"
+      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 md:col-span-2"
     >
       <div class="flex h-full flex-col justify-between">
         <div>
@@ -188,15 +188,19 @@ const arsenal = [
             <span class="font-mono text-xs text-zinc-400">// SYS_HEALTH</span>
           </div>
 
-          <div class="mt-4 grid grid-cols-2 gap-3">
+          <div class="mt-4 grid grid-cols-2 gap-2.5 sm:gap-3">
             {stats.map((s) => (
-              <div class="flex flex-col justify-between rounded-lg border border-zinc-100 bg-zinc-50/80 p-4">
-                <span class="font-display text-2xl font-bold tracking-tight text-zinc-800">
+              <div class="flex flex-col justify-between rounded-lg border border-zinc-100 bg-zinc-50/80 p-3 sm:p-4">
+                <span class="font-display text-xl font-bold tracking-tight text-zinc-800 sm:text-2xl">
                   {s.value}
                 </span>
-                <div class="mt-2">
-                  <p class="font-mono text-xs font-medium text-zinc-700">{s.label}</p>
-                  <p class="mt-0.5 text-[11px] leading-tight text-zinc-500">{s.desc}</p>
+                <div class="mt-1.5 sm:mt-2">
+                  <p class="font-mono text-[11px] font-medium text-zinc-700 sm:text-xs">
+                    {s.label}
+                  </p>
+                  <p class="mt-0.5 text-[10px] sm:text-[11px] leading-tight text-zinc-500">
+                    {s.desc}
+                  </p>
                 </div>
               </div>
             ))}
@@ -222,7 +226,7 @@ const arsenal = [
     {/* Security Arsenal & Toolchain */}
     <div
       data-bento-card
-      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-4"
+      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 md:col-span-4"
     >
       <div>
         <div class="flex items-center justify-between">
@@ -345,4 +349,3 @@ const arsenal = [
   }
   document.addEventListener("astro:page-load", initWhoAmIAnimation);
 </script>
-

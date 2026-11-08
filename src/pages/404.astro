@@ -58,10 +58,10 @@ import { Icon } from "astro-icon/components";
       </div>
 
       <!-- Action Navigation Buttons -->
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
         <a
           href="/"
-          class="flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 font-sans text-sm font-medium text-zinc-100 transition-colors hover:bg-zinc-800"
+          class="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-zinc-900 px-6 py-3 font-sans text-sm font-medium text-zinc-100 transition-colors hover:bg-zinc-800"
         >
           <Icon name="lucide:arrow-left" class="size-4" aria-hidden="true" />
           <span>Return Home</span>
@@ -69,7 +69,7 @@ import { Icon } from "astro-icon/components";
 
         <a
           href="/works"
-          class="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-5 py-3 font-sans text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 hover:text-zinc-900"
+          class="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-zinc-200 bg-white px-5 py-3 font-sans text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 hover:text-zinc-900"
         >
           <Icon name="lucide:briefcase-business" class="size-4 text-zinc-500" aria-hidden="true" />
           <span>Explore Works</span>
@@ -77,7 +77,7 @@ import { Icon } from "astro-icon/components";
 
         <a
           href="/contact"
-          class="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-5 py-3 font-sans text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 hover:text-zinc-900"
+          class="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-zinc-200 bg-white px-5 py-3 font-sans text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 hover:text-zinc-900"
         >
           <Icon name="lucide:mail" class="size-4 text-zinc-500" aria-hidden="true" />
           <span>Contact Gateway</span>

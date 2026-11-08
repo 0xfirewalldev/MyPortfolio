@@ -4,7 +4,7 @@ import Dock from "../../../components/Dock.astro";
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth overflow-x-hidden">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,9 +17,8 @@ import Dock from "../../../components/Dock.astro";
     <meta name="generator" content={Astro.generator} />
     <title>Contact | Irikefe M. Kesiena</title>
   </head>
-  <body class="min-h-screen px-6 py-8 antialiased md:px-12">
-    <Dock />
+  <body class="min-h-screen px-4 sm:px-6 md:px-12 py-4 sm:py-8 antialiased max-w-6xl mx-auto w-full">
     <slot />
+    <Dock />
   </body>
 </html>
-

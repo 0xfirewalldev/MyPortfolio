@@ -93,10 +93,10 @@ const levelStyles: Record<string, { badge: string }> = {
     </div>
 
     <div>
-      <h1 class="font-display text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+      <h1 class="font-display text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl md:text-4xl">
         Selected Works & Architecture
       </h1>
-      <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600">
+      <p class="mt-2 max-w-2xl text-xs sm:text-sm leading-relaxed text-zinc-600">
         A structured index of commissioned client projects, independent production systems, and
         security research tools.
       </p>
@@ -104,15 +104,15 @@ const levelStyles: Record<string, { badge: string }> = {
   </header>
 
   <!-- Filter / Controls Bar -->
-  <div class="mt-8 flex items-center justify-between">
-    <div class="shadow-2xs flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5">
-      <span class="size-2 animate-pulse rounded-full bg-lime-500"></span>
-      <p class="font-mono text-xs uppercase tracking-widest text-zinc-600">
-        Shows_Only_Production_Repositories
+  <div class="mt-8 flex items-center justify-between gap-3">
+    <div class="shadow-2xs flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5 min-w-0">
+      <span class="size-2 animate-pulse rounded-full bg-lime-500 shrink-0"></span>
+      <p class="font-mono text-[10px] sm:text-xs uppercase tracking-wider sm:tracking-widest text-zinc-600 truncate">
+        <span class="hidden sm:inline">Shows_Only_</span>Production_Repositories
       </p>
     </div>
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 shrink-0">
       <span class="hidden font-mono text-xs uppercase tracking-widest text-zinc-400 sm:inline">
         VIEW
       </span>
@@ -160,7 +160,7 @@ const levelStyles: Record<string, { badge: string }> = {
         return (
           <article
             data-work-card
-            class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md"
+            class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md"
           >
             <div>
               <!-- Top Row: Status + Level + Category -->
@@ -270,7 +270,7 @@ const levelStyles: Record<string, { badge: string }> = {
         return (
           <article
             data-work-card
-            class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md"
+            class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md"
           >
             <div>
               <!-- Top Row: Status + Level + Client Tag + Category -->

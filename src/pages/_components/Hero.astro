@@ -6,12 +6,12 @@ import { Icon } from "astro-icon/components";
 
 <section
   id="home"
-  class="relative flex min-h-[calc(100vh-6rem)] flex-col justify-between pt-10 pb-24 md:pt-16"
+  class="relative flex min-h-[calc(100vh-6rem)] flex-col justify-between pt-6 pb-28 md:pt-16"
 >
   <!-- Top meta status -->
   <div
     data-hero-meta
-    class="flex flex-row items-center justify-between font-mono text-xs uppercase tracking-wider text-zinc-500"
+    class="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] sm:text-xs uppercase tracking-wider text-zinc-500"
   >
     <h3 class="font-mono uppercase">Full Stack Security Developer</h3>
     <div>
@@ -20,27 +20,27 @@ import { Icon } from "astro-icon/components";
   </div>
 
   <!-- Hero Main Grid: Left Content + Right Terminal -->
-  <div class="my-auto grid grid-cols-1 items-center gap-10 py-10 lg:grid-cols-12 lg:gap-12">
-    <div class="flex flex-col space-y-6 lg:col-span-7">
+  <div class="my-auto grid grid-cols-1 items-center gap-8 py-8 sm:gap-10 sm:py-10 lg:grid-cols-12 lg:gap-12">
+    <div class="flex flex-col space-y-5 sm:space-y-6 lg:col-span-7">
       <h1
         data-hero-title
-        class="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-700 leading-[1.08]"
+        class="font-display text-3xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-700 leading-[1.1] sm:leading-[1.08]"
       >
         Engineering <span class="italic text-blue-400">Resilience</span> & Zero-Latency Scale.
       </h1>
 
       <p
         data-hero-desc
-        class="font-sans text-base sm:text-lg max-w-2xl leading-relaxed italic text-zinc-600"
+        class="font-sans text-sm sm:text-lg max-w-2xl leading-relaxed italic text-zinc-600"
       >
         Hi there, I’m a full-stack software developer and cybersecurity specialist operating at the
         intersection of robust application architecture and offensive vulnerability assessment.
       </p>
 
-      <div data-hero-cta class="flex flex-wrap items-center gap-4 pt-2">
+      <div data-hero-cta class="flex flex-wrap items-center gap-3 sm:gap-4 pt-2">
         <a
           href="/contact"
-          class="flex items-center gap-2 rounded-full border border-zinc-200 bg-zinc-100 px-6 py-3 font-sans text-sm font-medium text-zinc-950 transition-colors hover:bg-zinc-300"
+          class="flex items-center gap-2 rounded-full border border-zinc-200 bg-zinc-100 px-5 py-2.5 sm:px-6 sm:py-3 font-sans text-xs sm:text-sm font-medium text-zinc-950 transition-colors hover:bg-zinc-300"
         >
           Lets Talk
           <Icon name="lucide:arrow-right" class="h-4 w-4" />
@@ -49,7 +49,7 @@ import { Icon } from "astro-icon/components";
           href="https://zero-js-blog.vercel.app"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900 px-6 py-3 font-sans text-sm font-medium text-zinc-200 transition-colors hover:bg-zinc-800"
+          class="flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900 px-5 py-2.5 sm:px-6 sm:py-3 font-sans text-xs sm:text-sm font-medium text-zinc-200 transition-colors hover:bg-zinc-800"
         >
           <Icon name="lucide:zap" class="h-4 w-4" />
           Blog

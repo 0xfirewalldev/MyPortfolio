@@ -15,7 +15,7 @@ const imageUrl = new URL(image, canonical);
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth overflow-x-hidden">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,7 +26,10 @@ const imageUrl = new URL(image, canonical);
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content="Irikefe M. Kesiena" />
-    <meta name="keywords" content="Busy Bee, Irikefe M. Kesiena, Full Stack Developer" />
+    <meta
+      name="keywords"
+      content="Busy Bee, Irikefe M. Kesiena, Full Stack Developer, Cybersecurity"
+    />
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonical.href} />
@@ -41,15 +44,11 @@ const imageUrl = new URL(image, canonical);
     <meta property="og:description" content={description} />
     <meta property="og:image" content={imageUrl.href} />
 
-    <meta
-      name="description"
-      content="Get in touch with Irikefe M. Kesiena — Full Stack Developer & AppSec Specialist."
-    />
     <meta name="generator" content={Astro.generator} />
-    <title>About | Irikefe M. Kesiena</title>
+    <title>{title} | Irikefe M. Kesiena</title>
   </head>
 
-  <body class="flex min-h-screen flex-col px-10 py-6 antialiased">
+  <body class="flex min-h-screen flex-col px-4 sm:px-6 md:px-10 py-4 sm:py-6 antialiased max-w-6xl mx-auto w-full">
     <Navbar />
     <slot />
     <Dock />
