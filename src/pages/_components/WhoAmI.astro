@@ -71,7 +71,7 @@ const arsenal = [
 ];
 ---
 
-<section id="about" class="mt-16 scroll-mt-10 md:mt-24">
+<section class="mt-16 scroll-mt-10 md:mt-24">
   <div class="flex items-center justify-between border-b border-zinc-300 pb-3">
     <span class="font-mono text-xs uppercase tracking-widest text-blue-400">SYS_IDENTITY</span>
     <span class="font-mono text-xs uppercase tracking-widest text-blue-400">Who Am I?</span>
@@ -80,7 +80,10 @@ const arsenal = [
   {/* Bento Cards */}
   <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-6">
     {/* Bio Card */}
-    <div class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-4">
+    <div
+      data-bento-card
+      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-4"
+    >
       <div>
         <span class="flex w-fit items-center gap-2 rounded-full border border-zinc-300 px-2.5 py-1 font-mono text-xs tracking-tight text-zinc-600">
           <Icon name="lucide:terminal" class="size-3.5" aria-hidden="true" />
@@ -133,7 +136,10 @@ const arsenal = [
     </div>
 
     {/* Latest Activity Card */}
-    <div class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-2">
+    <div
+      data-bento-card
+      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-2"
+    >
       <div>
         <div class="flex items-center justify-between">
           <span class="font-mono text-xs uppercase tracking-widest text-blue-400">
@@ -169,7 +175,10 @@ const arsenal = [
     <SkillTree />
 
     {/* Stats */}
-    <div class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-2">
+    <div
+      data-bento-card
+      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-2"
+    >
       <div class="flex h-full flex-col justify-between">
         <div>
           <div class="flex items-center justify-between">
@@ -211,7 +220,10 @@ const arsenal = [
     </div>
 
     {/* Security Arsenal & Toolchain */}
-    <div class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-4">
+    <div
+      data-bento-card
+      class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-4"
+    >
       <div>
         <div class="flex items-center justify-between">
           <span class="font-mono text-xs uppercase tracking-widest text-blue-400">
@@ -247,3 +259,90 @@ const arsenal = [
     </div>
   </div>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initWhoAmIAnimation() {
+    const root = document.querySelector<HTMLElement>("#about");
+    if (!root) return;
+
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = root.querySelectorAll<HTMLElement>("[data-bento-card]");
+      if (cards.length === 0) return;
+
+      ScrollTrigger.batch(cards, {
+        start: "top 88%",
+        once: true,
+        onEnter: (batch) =>
+          gsap.fromTo(
+            batch,
+            { opacity: 0, y: 32 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              stagger: 0.12,
+              ease: "power3.out",
+            }
+          ),
+      });
+      ScrollTrigger.refresh();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initWhoAmIAnimation);
+  } else {
+    initWhoAmIAnimation();
+  }
+  document.addEventListener("astro:page-load", initWhoAmIAnimation);
+</script>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initWhoAmIAnimation() {
+    const root = document.querySelector<HTMLElement>("#about");
+    if (!root) return;
+
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = root.querySelectorAll<HTMLElement>("[data-bento-card]");
+      if (cards.length === 0) return;
+
+      ScrollTrigger.batch(cards, {
+        start: "top 88%",
+        once: true,
+        onEnter: (batch) =>
+          gsap.fromTo(
+            batch,
+            { opacity: 0, y: 32 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              stagger: 0.12,
+              ease: "power3.out",
+            }
+          ),
+      });
+      ScrollTrigger.refresh();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initWhoAmIAnimation);
+  } else {
+    initWhoAmIAnimation();
+  }
+  document.addEventListener("astro:page-load", initWhoAmIAnimation);
+</script>
+

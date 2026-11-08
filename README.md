@@ -77,11 +77,13 @@ Structured into a mathematical 6-column modular bento grid (`md:grid-cols-6`):
 - **Zero-Dependency View Toggle**:
   - Client-side toggle between an expansive 2-column card grid and a compact single-column list view with full ARIA accessibility (`aria-pressed`).
 
-### 5. Encrypted Dispatch Gateway (`src/pages/_components/Contact.astro`)
+### 5. Encrypted Dispatch Gateway (`/contact`)
 
+- **Dedicated Route Architecture**: Follows the modular `layout/` and `pages/` pattern with its own layout shell.
 - **Direct Dispatch**: Primary `mailto:` trigger with hover styling.
 - **Interactive Clipboard Action**: Integrated Web Clipboard API with a 2-second visual feedback state (`Copied to Clipboard!`).
-- **Response Telemetry**: Public SLA declaration (`< 24 Hours`), Timezone availability (`GMT+1 / Remote`), and verified security stance.
+- **Scope of Engagement**: Dedicated breakdown for Full-Stack Architecture vs. AppSec & Pentesting scopes.
+- **Response Telemetry**: Public SLA declaration (`< 24 Hours Guaranteed`), Timezone availability (`GMT+1 / Remote Global`), and verified security stance.
 - **Terminal Status Footer**: Clean system-wide status declaration (`ALL SYSTEMS NOMINAL`) and copyright watermark.
 
 ### 6. Fault-Tolerant Error Handling (`src/pages/404.astro`)

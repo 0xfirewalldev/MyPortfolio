@@ -158,7 +158,10 @@ const levelStyles: Record<string, { badge: string }> = {
         };
 
         return (
-          <article class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md">
+          <article
+            data-work-card
+            class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md"
+          >
             <div>
               <!-- Top Row: Status + Level + Category -->
               <div class="flex items-center justify-between gap-3">
@@ -265,7 +268,10 @@ const levelStyles: Record<string, { badge: string }> = {
         };
 
         return (
-          <article class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md">
+          <article
+            data-work-card
+            class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md"
+          >
             <div>
               <!-- Top Row: Status + Level + Client Tag + Category -->
               <div class="flex items-center justify-between gap-3">
@@ -353,25 +359,54 @@ const levelStyles: Record<string, { badge: string }> = {
 </main>
 
 <script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
   function initWorksView() {
     const btn = document.querySelector<HTMLButtonElement>("#view-toggle");
     const containers = document.querySelectorAll<HTMLElement>(".works-container");
-    if (!btn || containers.length === 0) return;
+    if (btn && containers.length > 0) {
+      btn.addEventListener("click", () => {
+        const isList = btn.getAttribute("aria-pressed") !== "true";
+        btn.setAttribute("aria-pressed", String(isList));
+        btn.setAttribute("aria-label", isList ? "Switch to grid view" : "Switch to list view");
 
-    btn.addEventListener("click", () => {
-      const isList = btn.getAttribute("aria-pressed") !== "true";
-      btn.setAttribute("aria-pressed", String(isList));
-      btn.setAttribute("aria-label", isList ? "Switch to grid view" : "Switch to list view");
-
-      containers.forEach((container) => {
-        if (isList) {
-          container.classList.remove("md:grid-cols-2");
-          container.classList.add("grid-cols-1");
-        } else {
-          container.classList.remove("grid-cols-1");
-          container.classList.add("md:grid-cols-2");
-        }
+        containers.forEach((container) => {
+          if (isList) {
+            container.classList.remove("md:grid-cols-2");
+            container.classList.add("grid-cols-1");
+          } else {
+            container.classList.remove("grid-cols-1");
+            container.classList.add("md:grid-cols-2");
+          }
+        });
       });
+    }
+
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = document.querySelectorAll<HTMLElement>("[data-work-card]");
+      if (cards.length === 0) return;
+
+      ScrollTrigger.batch(cards, {
+        start: "top 90%",
+        once: true,
+        onEnter: (batch) =>
+          gsap.fromTo(
+            batch,
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              stagger: 0.1,
+              ease: "power3.out",
+            }
+          ),
+      });
+      ScrollTrigger.refresh();
     });
   }
 

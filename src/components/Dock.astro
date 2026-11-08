@@ -3,7 +3,7 @@ import { Icon } from "astro-icon/components";
 
 const items = [
   { label: "Works", href: "/works", icon: "lucide:briefcase-business", id: "works" },
-  { label: "About", href: "/#about", icon: "lucide:user", id: "about" },
+  { label: "About", href: "/", icon: "lucide:user", id: "home" },
   { label: "Contact", href: "/contact", icon: "lucide:mail", id: "contact" },
 ];
 ---
@@ -85,6 +85,16 @@ const items = [
 
     // GPU-accelerated macOS dock magnification with smooth wave falloff
     const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.from(dock, {
+        y: 40,
+        opacity: 0,
+        duration: 0.75,
+        ease: "back.out(1.2)",
+        delay: 0.1,
+      });
+    });
+
     mm.add("(hover: hover) and (prefers-reduced-motion: no-preference)", () => {
       const MAX_SCALE = 1.45;
       const RANGE = 110;
