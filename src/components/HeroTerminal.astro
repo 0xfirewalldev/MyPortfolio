@@ -1,0 +1,54 @@
+---
+const lines = [
+  { cmd: "whoami", out: "irikefe // full-stack dev + pentester" },
+  { cmd: "stack --list", out: "next.js · typescript · prisma · supabase" },
+  { cmd: "audit ./app --owasp", out: "authz ✓  input-validation ✓  sessions ✓" },
+];
+---
+
+<div
+  id="hero-terminal"
+  class="hidden rounded-xl border border-zinc-800 bg-zinc-950 font-mono text-xs shadow-2xl lg:block"
+  aria-hidden="true"
+>
+  <div class="flex items-center gap-1.5 border-b border-zinc-800 px-4 py-3">
+    <span class="size-2.5 rounded-full bg-zinc-700"></span>
+    <span class="size-2.5 rounded-full bg-zinc-700"></span>
+    <span class="size-2.5 rounded-full bg-zinc-700"></span>
+    <span class="ml-3 text-zinc-500">~/irikefe</span>
+  </div>
+
+  <div class="space-y-4 p-5 leading-relaxed text-zinc-300">
+    {
+      lines.map((l) => (
+        <div data-line>
+          <p>
+            <span class="text-lime-400">$</span> {l.cmd}
+          </p>
+          <p class="text-zinc-500">{l.out}</p>
+        </div>
+      ))
+    }
+    <p>
+      <span class="text-lime-400">$</span>
+      <span class="term-cursor"></span>
+    </p>
+  </div>
+</div>
+
+<style>
+  .term-cursor {
+    display: inline-block;
+    width: 0.5ch;
+    height: 1em;
+    vertical-align: text-bottom;
+    background: rgb(163 230 53);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .term-cursor { animation: none; }
+  }
+</style>

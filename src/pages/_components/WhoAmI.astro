@@ -1,0 +1,249 @@
+---
+import { Icon } from "astro-icon/components";
+import SkillTree from "../../components/SkillTree.astro";
+
+const items = [
+  {
+    label: "Github",
+    icon: "simple-icons:github",
+    uri: "https://github.com/0xfirewalldev",
+    external: true,
+  },
+  {
+    label: "Instagram",
+    icon: "simple-icons:instagram",
+    uri: "https://www.instagram.com/devmikefullstack/",
+    external: true,
+  },
+  {
+    label: "X",
+    icon: "simple-icons:x",
+    uri: "https://x.com/DevTech_Coder23",
+    external: true,
+  },
+  {
+    label: "Bluesky",
+    icon: "simple-icons:bluesky",
+    uri: "https://bsky.app/profile/micahk1ng.bsky.social",
+    external: true,
+  },
+  {
+    label: "LinkedIn",
+    icon: "simple-icons:linkedin",
+    uri: "https://www.linkedin.com/in/micah-kesiena-a3b424361/",
+    external: true,
+  },
+];
+
+const updated = "2026-11-07";
+const activity = [
+  { tag: "LEARNING", text: "Practical penetration testing: web app attack surface and auth flows" },
+  { tag: "BUILDING", text: "This portfolio, Astro 5 + Tailwind v4 + GSAP" },
+  {
+    tag: "HARDENING",
+    text: "Session handling and IDOR-safe server actions in my Next.js projects",
+  },
+];
+
+const stats = [
+  { value: "0", label: "Criticals in Prod", desc: "Zero unpatched CVEs" },
+  { value: "0", label: "Security Audits", desc: "Web & API assessments" },
+  { value: "80%", label: "Projects Shipped", desc: "High availability" },
+  { value: "2+", label: "Years Building", desc: "Full-stack & AppSec" },
+];
+
+const arsenal = [
+  {
+    category: "OFFENSIVE_SECURITY",
+    icon: "lucide:shield-alert",
+    tools: ["Burp Suite Pro", "Nmap", "Wireshark", "OWASP ZAP", "SQLmap", "FFuF"],
+  },
+  {
+    category: "FULL_STACK_RUNTIME",
+    icon: "lucide:layers",
+    tools: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Supabase", "Docker", "Prisma"],
+  },
+  {
+    category: "DEFENSE_STANDARDS",
+    icon: "lucide:lock",
+    tools: ["OWASP Top 10", "OAuth 2.0 / PKCE", "RBAC", "IDOR Audit", "Security Headers"],
+  },
+];
+---
+
+<section id="about" class="mt-16 scroll-mt-10 md:mt-24">
+  <div class="flex items-center justify-between border-b border-zinc-300 pb-3">
+    <span class="font-mono text-xs uppercase tracking-widest text-blue-400">SYS_IDENTITY</span>
+    <span class="font-mono text-xs uppercase tracking-widest text-blue-400">Who Am I?</span>
+  </div>
+
+  {/* Bento Cards */}
+  <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-6">
+    {/* Bio Card */}
+    <div class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-4">
+      <div>
+        <span class="flex w-fit items-center gap-2 rounded-full border border-zinc-300 px-2.5 py-1 font-mono text-xs tracking-tight text-zinc-600">
+          <Icon name="lucide:terminal" class="size-3.5" aria-hidden="true" />
+          This is me
+        </span>
+
+        <div class="mt-5 space-y-3">
+          <p class="font-display text-xl leading-snug tracking-tight text-zinc-800">
+            I build full-stack apps, then test them the way an attacker would.
+          </p>
+          <p class="text-sm leading-relaxed text-zinc-600">
+            I work mainly in Next.js and TypeScript with Prisma and Supabase, and I design auth,
+            sessions and server actions with security in mind from the first commit, not as a final
+            pass.
+          </p>
+          <p class="text-sm leading-relaxed text-zinc-600">
+            Outside client and product work, I do ethical penetration testing and share what I learn
+            through content on tech and security.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-zinc-200 pt-4">
+        <div class="flex items-center gap-4">
+          <span class="font-mono text-xs uppercase tracking-widest text-zinc-500">
+            // FIND_ME_ON
+          </span>
+          <ul class="flex items-center gap-3">
+            {items.map((item) => (
+              <li>
+                <a
+                  href={item.uri}
+                  aria-label={item.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-zinc-500 transition-colors hover:text-zinc-900"
+                >
+                  <Icon name={item.icon} class="size-5" aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-zinc-500">
+          <span class="size-2 rounded-full bg-lime-500" aria-hidden="true"></span>
+          Freelance / Open source
+        </p>
+      </div>
+    </div>
+
+    {/* Latest Activity Card */}
+    <div class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-2">
+      <div>
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs uppercase tracking-widest text-blue-400">
+            Latest_Activity
+          </span>
+          <span class="flex items-center gap-2 font-mono text-xs text-zinc-500">
+            <span class="relative flex size-2" aria-hidden="true">
+              <span class="absolute inline-flex size-full animate-ping rounded-full bg-lime-400 opacity-60"></span>
+              <span class="relative inline-flex size-2 rounded-full bg-lime-500"></span>
+            </span>
+            <time datetime={updated}>UPDATED {updated}</time>
+          </span>
+        </div>
+
+        <p class="font-display mt-5 text-xl leading-snug tracking-tight text-zinc-700">
+          Currently deep in practical penetration testing.
+        </p>
+      </div>
+
+      <ul class="mt-6 divide-y divide-zinc-200 border-t border-zinc-200">
+        {activity.map((item) => (
+          <li class="flex gap-4 py-2.5 text-sm">
+            <span class="w-24 shrink-0 font-mono text-xs uppercase tracking-widest text-zinc-500">
+              {item.tag}
+            </span>
+            <span class="text-zinc-700">{item.text}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Skill Tree System Map */}
+    <SkillTree />
+
+    {/* Stats */}
+    <div class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-2">
+      <div class="flex h-full flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs uppercase tracking-widest text-blue-400">
+              Stats_Metrics
+            </span>
+            <span class="font-mono text-xs text-zinc-400">// SYS_HEALTH</span>
+          </div>
+
+          <div class="mt-4 grid grid-cols-2 gap-3">
+            {stats.map((s) => (
+              <div class="flex flex-col justify-between rounded-lg border border-zinc-100 bg-zinc-50/80 p-4">
+                <span class="font-display text-2xl font-bold tracking-tight text-zinc-800">
+                  {s.value}
+                </span>
+                <div class="mt-2">
+                  <p class="font-mono text-xs font-medium text-zinc-700">{s.label}</p>
+                  <p class="mt-0.5 text-[11px] leading-tight text-zinc-500">{s.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- System Health Footer Banner -->
+        <div class="mt-4 rounded-lg border border-zinc-100 bg-zinc-50/70 p-3">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="flex items-center gap-2 text-zinc-700 font-medium">
+              <span class="size-2 rounded-full bg-lime-500"></span>
+              SYS_INTEGRITY: NORMAL
+            </span>
+            <span class="text-zinc-400 text-[11px]">AUDIT_READY</span>
+          </div>
+          <p class="mt-1.5 text-[11px] leading-relaxed text-zinc-500">
+            Automated boundary checks and session defense active.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Security Arsenal & Toolchain */}
+    <div class="col-span-1 flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 md:col-span-4">
+      <div>
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs uppercase tracking-widest text-blue-400">
+            Security_Arsenal
+          </span>
+          <span class="font-mono text-xs text-zinc-400">// AUDIT_&_DEV_STACK</span>
+        </div>
+
+        <p class="font-display mt-4 text-xl leading-snug tracking-tight text-zinc-800">
+          The weapons of choice for vulnerability research and shipping resilient systems.
+        </p>
+
+        <div class="mt-5 space-y-3">
+          {arsenal.map((group) => (
+            <div class="rounded-lg border border-zinc-100 bg-zinc-50/70 p-3.5">
+              <div class="mb-2 flex items-center gap-2">
+                <Icon name={group.icon} class="size-3.5 text-blue-500" aria-hidden="true" />
+                <span class="font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-700">
+                  {group.category}
+                </span>
+              </div>
+              <ul class="flex flex-wrap gap-1.5">
+                {group.tools.map((tool) => (
+                  <li class="rounded-full border border-zinc-200/80 bg-white px-2.5 py-1 font-mono text-xs text-zinc-600">
+                    {tool}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

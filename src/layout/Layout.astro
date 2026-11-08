@@ -1,0 +1,57 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/uiComp/Navbar.astro";
+import Dock from "../components/Dock.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = "Irikefe M. Kesiena", image = "logo.svg" } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
+const imageUrl = new URL(image, canonical);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonical.href} />
+
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Irikefe M. Kesiena" />
+    <meta name="keywords" content="Busy Bee, Irikefe M. Kesiena, Full Stack Developer" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical.href} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:creator" content="@DevTech_Coder23" />
+    <meta property="twitter:image" content={imageUrl.href} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl.href} />
+
+    <meta
+      name="description"
+      content="Get in touch with Irikefe M. Kesiena — Full Stack Developer & AppSec Specialist."
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>About | Irikefe M. Kesiena</title>
+  </head>
+
+  <body class="flex min-h-screen flex-col px-10 py-6 antialiased">
+    <Navbar />
+    <slot />
+    <Dock />
+  </body>
+</html>

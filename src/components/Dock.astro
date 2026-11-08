@@ -1,0 +1,139 @@
+---
+import { Icon } from "astro-icon/components";
+
+const items = [
+  { label: "Works", href: "/works", icon: "lucide:briefcase-business", id: "works" },
+  { label: "About", href: "/#about", icon: "lucide:user", id: "about" },
+  { label: "Contact", href: "/contact", icon: "lucide:mail", id: "contact" },
+];
+---
+
+<nav aria-label="Primary" class="fixed bottom-6 left-1/2 z-50 -translate-x-1/2">
+  <ul
+    id="dock"
+    class="flex items-end gap-2 rounded-full border border-zinc-800 bg-zinc-950/80 p-2 shadow-2xl backdrop-blur-md"
+  >
+    {items.map((item) => (
+      <li class="relative flex items-center justify-center">
+        <a
+          href={item.href}
+          aria-label={item.label}
+          data-dock-item
+          data-section={item.id}
+          style="transform-origin: 50% 100%; will-change: transform;"
+          class="flex size-11 items-center justify-center rounded-2xl text-zinc-400 transition-colors hover:text-blue-400 hover:bg-zinc-800/60 data-[active=true]:text-blue-400 data-[active=true]:bg-zinc-800"
+        >
+          <Icon name={item.icon} class="size-5 pointer-events-none" aria-hidden="true" />
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  import { gsap } from "gsap";
+
+  function initDock() {
+    const dock = document.querySelector<HTMLElement>("#dock");
+    if (!dock) return;
+    const items = [...dock.querySelectorAll<HTMLElement>("[data-dock-item]")];
+
+    // Smooth scroll on click + subtle bounce feedback
+    items.forEach((el) => {
+      el.addEventListener("click", (e) => {
+        const targetId = el.getAttribute("href");
+        if (targetId && targetId.startsWith("#")) {
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            e.preventDefault();
+            targetEl.scrollIntoView({ behavior: "smooth" });
+            gsap.fromTo(el, { y: -8 }, { y: 0, duration: 0.4, ease: "bounce.out" });
+          }
+        }
+      });
+    });
+
+    // Active route & section highlight
+    const byId = new Map(
+      items.filter((el) => el.dataset.section).map((el) => [el.dataset.section!, el])
+    );
+
+    const path = window.location.pathname;
+    if (path.startsWith("/works")) {
+      items.forEach((el) => el.removeAttribute("data-active"));
+      byId.get("works")?.setAttribute("data-active", "true");
+    } else if (path.startsWith("/contact")) {
+      items.forEach((el) => el.removeAttribute("data-active"));
+      byId.get("contact")?.setAttribute("data-active", "true");
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            items.forEach((el) => el.removeAttribute("data-active"));
+            byId.get(entry.target.id)?.setAttribute("data-active", "true");
+          }
+        },
+        { rootMargin: "-40% 0px -50% 0px" }
+      );
+
+      byId.forEach((_, id) => {
+        const section = document.getElementById(id);
+        if (section) io.observe(section);
+      });
+    }
+
+    // GPU-accelerated macOS dock magnification with smooth wave falloff
+    const mm = gsap.matchMedia();
+    mm.add("(hover: hover) and (prefers-reduced-motion: no-preference)", () => {
+      const MAX_SCALE = 1.45;
+      const RANGE = 110;
+      const opts = { duration: 0.22, ease: "power2.out" };
+
+      const quickScale = items.map((el) => gsap.quickTo(el, "scale", opts));
+      const quickY = items.map((el) => gsap.quickTo(el, "y", opts));
+
+      const onMove = (e: PointerEvent) => {
+        const mouseX = e.clientX;
+        items.forEach((el, i) => {
+          const rect = el.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const dist = Math.abs(mouseX - centerX);
+
+          if (dist < RANGE) {
+            const factor = Math.cos((dist / RANGE) * (Math.PI / 2));
+            const scale = 1 + (MAX_SCALE - 1) * factor;
+            const yLift = -8 * factor;
+            quickScale[i](scale);
+            quickY[i](yLift);
+          } else {
+            quickScale[i](1);
+            quickY[i](0);
+          }
+        });
+      };
+
+      const onLeave = () => {
+        items.forEach((_, i) => {
+          quickScale[i](1);
+          quickY[i](0);
+        });
+      };
+
+      dock.addEventListener("pointermove", onMove);
+      dock.addEventListener("pointerleave", onLeave);
+
+      return () => {
+        dock.removeEventListener("pointermove", onMove);
+        dock.removeEventListener("pointerleave", onLeave);
+      };
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initDock);
+  } else {
+    initDock();
+  }
+  document.addEventListener("astro:page-load", initDock);
+</script>

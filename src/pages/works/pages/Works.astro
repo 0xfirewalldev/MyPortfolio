@@ -1,0 +1,384 @@
+---
+import { Icon } from "astro-icon/components";
+
+const clientWorks = [
+  {
+    title: "E&A Atelier",
+    category: "Luxury E-Commerce Storefront",
+    level: "Intermediate",
+    type: "Client Deliverable",
+    description:
+      "Polished artisanal crochet e-commerce platform featuring dynamic category filtering and an optimized cart system.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    href: "https://eaatelier.vercel.app",
+    github: "https://github.com/0xfirewalldev",
+    status: "DEPLOYED",
+  },
+];
+
+const engineeringWorks = [
+  {
+    title: "Sizer.io",
+    category: "Full-Stack Risk Engine",
+    level: "Professional",
+    type: "Independent Project",
+    description:
+      "Next.js risk management and position analytics application featuring live TradingView integration and 1% capital calculators.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "TradingView API"],
+    href: "https://sizer-io-eosin.vercel.app",
+    github: "https://github.com/0xfirewalldev",
+    status: "PRODUCTION",
+  },
+  {
+    title: "Vertex Canvas",
+    category: "Project Management Space",
+    level: "Professional",
+    type: "Security Architecture",
+    description:
+      "Real-time collaborative Kanban workspace secured with HMAC-SHA256 signed session cookies and OAuth PKCE authentication.",
+    tech: ["Next.js", "Prisma", "PostgreSQL", "OAuth PKCE"],
+    github: "https://github.com/0xfirewalldev",
+    href: "https://vertexcanvas.vercel.app",
+    status: "SECURED",
+  },
+  {
+    title: "VulnTrack Lite",
+    category: "Vulnerability Dashboard",
+    level: "Intermediate",
+    type: "Threat Intelligence",
+    description:
+      "Lightweight threat intelligence monitoring engine built with Python and FastAPI, paired with 3D motion graphs for real-time CVE analysis.",
+    tech: ["Python", "FastAPI", "SQLite", "Framer Motion"],
+    github: "https://github.com/0xfirewalldev",
+    status: "ACTIVE",
+  },
+];
+
+const statusStyles: Record<string, { dot: string; badge: string }> = {
+  PRODUCTION: { dot: "bg-lime-500", badge: "border-lime-200 bg-lime-50/60 text-lime-700" },
+  DEPLOYED: {
+    dot: "bg-emerald-500",
+    badge: "border-emerald-200 bg-emerald-50/60 text-emerald-700",
+  },
+  SECURED: { dot: "bg-blue-500", badge: "border-blue-200 bg-blue-50/60 text-blue-700" },
+  ACTIVE: { dot: "bg-amber-500", badge: "border-amber-200 bg-amber-50/60 text-amber-700" },
+};
+
+const levelStyles: Record<string, { badge: string }> = {
+  Professional: { badge: "border-purple-200 bg-purple-50/70 text-purple-700" },
+  Intermediate: { badge: "border-sky-200 bg-sky-50/70 text-sky-700" },
+  Beginner: { badge: "border-zinc-200 bg-zinc-50/70 text-zinc-600" },
+};
+---
+
+<main class="mx-auto max-w-5xl pb-24">
+  <!-- Back to Home Link -->
+  <div class="pt-4">
+    <a
+      href="/"
+      class="flex w-fit items-center gap-2 font-mono text-xs uppercase tracking-wider text-zinc-500 transition-colors hover:text-zinc-900"
+    >
+      <Icon name="lucide:arrow-left" class="size-3.5" /> Back To Home
+    </a>
+  </div>
+
+  <!-- Header -->
+  <header class="mt-8 space-y-4 border-b border-zinc-200 pb-6">
+    <div class="flex items-center justify-between">
+      <span class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-blue-500">
+        <span class="size-1.5 animate-pulse rounded-full bg-blue-500"></span>
+        SYS_REPOSITORY // REPOSITORIES_INDEX
+      </span>
+      <span class="font-mono text-xs uppercase tracking-widest text-zinc-400">INDEX: 2026</span>
+    </div>
+
+    <div>
+      <h1 class="font-display text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+        Selected Works & Architecture
+      </h1>
+      <p class="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600">
+        A structured index of commissioned client projects, independent production systems, and
+        security research tools.
+      </p>
+    </div>
+  </header>
+
+  <!-- Filter / Controls Bar -->
+  <div class="mt-8 flex items-center justify-between">
+    <div class="shadow-2xs flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5">
+      <span class="size-2 animate-pulse rounded-full bg-lime-500"></span>
+      <p class="font-mono text-xs uppercase tracking-widest text-zinc-600">
+        Shows_Only_Production_Repositories
+      </p>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <span class="hidden font-mono text-xs uppercase tracking-widest text-zinc-400 sm:inline">
+        VIEW
+      </span>
+      <button
+        id="view-toggle"
+        type="button"
+        aria-pressed="false"
+        aria-label="Switch to list view"
+        class="shadow-2xs group flex cursor-pointer items-center justify-center rounded-lg border border-zinc-200 bg-white p-2 text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-900"
+      >
+        <Icon
+          name="lucide:layout-grid"
+          class="size-4.5 group-aria-pressed:hidden"
+          aria-hidden="true"
+        />
+        <Icon
+          name="lucide:menu"
+          class="hidden size-4.5 group-aria-pressed:block"
+          aria-hidden="true"
+        />
+      </button>
+    </div>
+  </div>
+
+  <!-- SECTION 1: CORE ARCHITECTURE & INDEPENDENT REPOSITORIES -->
+  <section class="mt-12">
+    <div class="flex items-center justify-between border-b border-zinc-200 pb-3">
+      <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-zinc-600">
+        <Icon name="lucide:layers" class="size-3.5 text-blue-500" aria-hidden="true" />
+        <span>Core_Architectures // Independent_Labs</span>
+      </div>
+      <span class="font-mono text-xs text-zinc-400">// 03 REPOSITORIES</span>
+    </div>
+
+    <div class="works-container mt-6 grid grid-cols-1 gap-6 transition-all md:grid-cols-2">
+      {engineeringWorks.map((work) => {
+        const style = statusStyles[work.status] ?? {
+          dot: "bg-zinc-400",
+          badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+        };
+        const levelStyle = levelStyles[work.level] ?? {
+          badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+        };
+
+        return (
+          <article class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md">
+            <div>
+              <!-- Top Row: Status + Level + Category -->
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span
+                    class:list={[
+                      "flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-wide uppercase",
+                      style.badge,
+                    ]}
+                  >
+                    <span class:list={["size-1.5 rounded-full", style.dot]} />
+                    {work.status}
+                  </span>
+
+                  <span
+                    class:list={[
+                      "rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-wide uppercase",
+                      levelStyle.badge,
+                    ]}
+                  >
+                    {work.level}
+                  </span>
+                </div>
+
+                <span class="font-mono text-xs font-medium uppercase tracking-wider text-blue-500">
+                  {work.category}
+                </span>
+              </div>
+
+              <!-- Title & Description -->
+              <h2 class="font-display mt-4 text-xl font-bold tracking-tight text-zinc-900 transition-colors group-hover:text-blue-600">
+                {work.title}
+              </h2>
+
+              <p class="mt-2.5 text-sm leading-relaxed text-zinc-600">{work.description}</p>
+
+              <!-- Tech Stack Chips -->
+              <ul class="mt-5 flex flex-wrap gap-1.5">
+                {work.tech.map((t) => (
+                  <li class="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] text-zinc-600">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Bottom Action Row -->
+            <div class="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4">
+              <div class="flex items-center gap-3">
+                {work.github && (
+                  <a
+                    href={work.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${work.title} source code on GitHub`}
+                    class="flex items-center gap-1.5 font-mono text-xs text-zinc-500 transition-colors hover:text-zinc-900"
+                  >
+                    <Icon name="simple-icons:github" class="size-4" aria-hidden="true" />
+                    <span>Source</span>
+                  </a>
+                )}
+              </div>
+
+              {work.href && (
+                <a
+                  href={work.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-1 rounded-full bg-zinc-900 px-3.5 py-1.5 font-mono text-xs font-medium text-zinc-100 transition-colors hover:bg-zinc-800"
+                >
+                  <span>Live Demo</span>
+                  <Icon name="lucide:arrow-up-right" class="size-3.5" aria-hidden="true" />
+                </a>
+              )}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- SECTION 2: CLIENT COMMISSIONS & DELIVERABLES -->
+  <section class="mt-14">
+    <div class="flex items-center justify-between border-b border-zinc-200 pb-3">
+      <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-emerald-700">
+        <Icon
+          name="lucide:briefcase-business"
+          class="size-3.5 text-emerald-600"
+          aria-hidden="true"
+        />
+        <span>Client_Work // Commercial_Deliverables</span>
+      </div>
+      <span class="font-mono text-xs text-zinc-400">// 01 REPOSITORY</span>
+    </div>
+
+    <div class="works-container mt-6 grid grid-cols-1 gap-6 transition-all md:grid-cols-2">
+      {clientWorks.map((work) => {
+        const style = statusStyles[work.status] ?? {
+          dot: "bg-zinc-400",
+          badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+        };
+        const levelStyle = levelStyles[work.level] ?? {
+          badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+        };
+
+        return (
+          <article class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md">
+            <div>
+              <!-- Top Row: Status + Level + Client Tag + Category -->
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span
+                    class:list={[
+                      "flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-wide uppercase",
+                      style.badge,
+                    ]}
+                  >
+                    <span class:list={["size-1.5 rounded-full", style.dot]} />
+                    {work.status}
+                  </span>
+
+                  <span
+                    class:list={[
+                      "rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-wide uppercase",
+                      levelStyle.badge,
+                    ]}
+                  >
+                    {work.level}
+                  </span>
+
+                  <span class="rounded-full border border-emerald-200 bg-emerald-50/70 px-2.5 py-0.5 font-mono text-[11px] font-medium uppercase tracking-wide text-emerald-700">
+                    Client Project
+                  </span>
+                </div>
+
+                <span class="font-mono text-xs font-medium uppercase tracking-wider text-blue-500">
+                  {work.category}
+                </span>
+              </div>
+
+              <!-- Title & Description -->
+              <h2 class="font-display mt-4 text-xl font-bold tracking-tight text-zinc-900 transition-colors group-hover:text-blue-600">
+                {work.title}
+              </h2>
+
+              <p class="mt-2.5 text-sm leading-relaxed text-zinc-600">{work.description}</p>
+
+              <!-- Tech Stack Chips -->
+              <ul class="mt-5 flex flex-wrap gap-1.5">
+                {work.tech.map((t) => (
+                  <li class="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] text-zinc-600">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Bottom Action Row -->
+            <div class="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4">
+              <div class="flex items-center gap-3">
+                {work.github && (
+                  <a
+                    href={work.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${work.title} source code on GitHub`}
+                    class="flex items-center gap-1.5 font-mono text-xs text-zinc-500 transition-colors hover:text-zinc-900"
+                  >
+                    <Icon name="simple-icons:github" class="size-4" aria-hidden="true" />
+                    <span>Source</span>
+                  </a>
+                )}
+              </div>
+
+              {work.href && (
+                <a
+                  href={work.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-1 rounded-full bg-zinc-900 px-3.5 py-1.5 font-mono text-xs font-medium text-zinc-100 transition-colors hover:bg-zinc-800"
+                >
+                  <span>Live Demo</span>
+                  <Icon name="lucide:arrow-up-right" class="size-3.5" aria-hidden="true" />
+                </a>
+              )}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+</main>
+
+<script>
+  function initWorksView() {
+    const btn = document.querySelector<HTMLButtonElement>("#view-toggle");
+    const containers = document.querySelectorAll<HTMLElement>(".works-container");
+    if (!btn || containers.length === 0) return;
+
+    btn.addEventListener("click", () => {
+      const isList = btn.getAttribute("aria-pressed") !== "true";
+      btn.setAttribute("aria-pressed", String(isList));
+      btn.setAttribute("aria-label", isList ? "Switch to grid view" : "Switch to list view");
+
+      containers.forEach((container) => {
+        if (isList) {
+          container.classList.remove("md:grid-cols-2");
+          container.classList.add("grid-cols-1");
+        } else {
+          container.classList.remove("grid-cols-1");
+          container.classList.add("md:grid-cols-2");
+        }
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initWorksView);
+  } else {
+    initWorksView();
+  }
+  document.addEventListener("astro:page-load", initWorksView);
+</script>
