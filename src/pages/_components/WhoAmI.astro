@@ -71,7 +71,7 @@ const arsenal = [
 ];
 ---
 
-<section class="mt-12 scroll-mt-10 md:mt-16">
+<section id="about" class="mt-12 scroll-mt-10 md:mt-16">
   <div class="flex items-center justify-between border-b border-zinc-300 pb-3">
     <span class="font-mono text-xs uppercase tracking-widest text-blue-400">SYS_IDENTITY</span>
     <span class="font-mono text-xs uppercase tracking-widest text-blue-400">Who Am I?</span>
@@ -276,20 +276,17 @@ const arsenal = [
     if (cards.length === 0) return;
 
     cards.forEach((card) => {
-      // InView fade-in and fade-out animation
+      // In-view fade in animation (no fade-out)
       inView(
         card,
         () => {
           animate(
             card,
-            { opacity: [0, 1], y: [28, 0] },
-            { duration: 0.65, ease: [0.16, 1, 0.3, 1] }
+            { opacity: [0, 1], y: [20, 0] },
+            { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
           );
-          return () => {
-            animate(card, { opacity: [1, 0.15], y: [0, 16] }, { duration: 0.45, ease: "easeOut" });
-          };
         },
-        { margin: "-5% 0px -5% 0px" }
+        { margin: "-5% 0px" }
       );
     });
   }

@@ -3,45 +3,55 @@ import { Icon } from "astro-icon/components";
 
 const clientWorks = [
   {
+    num: "001",
     title: "E&A Atelier",
     category: "Luxury E-Commerce Storefront",
     level: "Intermediate",
     type: "Client Deliverable",
     description:
-      "Polished artisanal crochet e-commerce platform featuring dynamic category filtering and an optimized cart system.",
+      "Polished artisanal crochet e-commerce platform featuring dynamic category filtering, bespoke aesthetics, and an optimized cart system.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     href: "https://eaatelier.vercel.app",
+    domain: "eaatelier.vercel.app",
     github: "https://github.com/0xfirewalldev",
     status: "DEPLOYED",
+    isClient: true,
   },
 ];
 
 const engineeringWorks = [
   {
+    num: "002",
     title: "Sizer.io",
     category: "Full-Stack Risk Engine",
     level: "Professional",
     type: "Independent Project",
     description:
-      "Next.js risk management and position analytics application featuring live TradingView integration and 1% capital calculators.",
+      "Next.js risk management and position analytics application featuring live TradingView integration, position sizing algorithms, and 1% capital calculators.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "TradingView API"],
     href: "https://sizer-io-eosin.vercel.app",
+    domain: "sizer-io-eosin.vercel.app",
     github: "https://github.com/0xfirewalldev",
     status: "PRODUCTION",
+    isClient: false,
   },
   {
+    num: "003",
     title: "Vertex Canvas",
     category: "Project Management Space",
     level: "Professional",
     type: "Security Architecture",
     description:
-      "Real-time collaborative Kanban workspace secured with HMAC-SHA256 signed session cookies and OAuth PKCE authentication.",
+      "Real-time collaborative Kanban workspace secured with HMAC-SHA256 signed session cookies, RBAC permissions, and OAuth PKCE authentication.",
     tech: ["Next.js", "Prisma", "PostgreSQL", "OAuth PKCE"],
-    github: "https://github.com/0xfirewalldev",
     href: "https://vertexcanvas.vercel.app",
+    domain: "vertexcanvas.vercel.app",
+    github: "https://github.com/0xfirewalldev",
     status: "SECURED",
+    isClient: false,
   },
   {
+    num: "004",
     title: "VulnTrack Lite",
     category: "Vulnerability Dashboard",
     level: "Intermediate",
@@ -49,8 +59,11 @@ const engineeringWorks = [
     description:
       "Lightweight threat intelligence monitoring engine built with Python and FastAPI, paired with 3D motion graphs for real-time CVE analysis.",
     tech: ["Python", "FastAPI", "SQLite", "Framer Motion"],
+    href: "https://github.com/0xfirewalldev",
+    domain: "github.com/0xfirewalldev",
     github: "https://github.com/0xfirewalldev",
     status: "ACTIVE",
+    isClient: false,
   },
 ];
 
@@ -103,69 +116,119 @@ const levelStyles: Record<string, { badge: string }> = {
     </div>
   </header>
 
-  <!-- Filter / Controls Bar -->
+  <!-- Filter & View Controls Bar -->
   <div class="mt-8 flex items-center justify-between gap-3">
-    <div class="shadow-2xs flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1.5 min-w-0">
+    <div class="shadow-2xs flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3.5 py-1.5 min-w-0">
       <span class="size-2 animate-pulse rounded-full bg-lime-500 shrink-0"></span>
       <p class="font-mono text-[10px] sm:text-xs uppercase tracking-wider sm:tracking-widest text-zinc-600 truncate">
         <span class="hidden sm:inline">Shows_Only_</span>Production_Repositories
       </p>
     </div>
 
+    <!-- Toggle View Buttons: List (Default) vs Grid -->
     <div class="flex items-center gap-2 shrink-0">
       <span class="hidden font-mono text-xs uppercase tracking-widest text-zinc-400 sm:inline">
         VIEW
       </span>
-      <button
-        id="view-toggle"
-        type="button"
-        aria-pressed="false"
-        aria-label="Switch to list view"
-        class="shadow-2xs group flex cursor-pointer items-center justify-center rounded-lg border border-zinc-200 bg-white p-2 text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-900"
-      >
-        <Icon
-          name="lucide:layout-grid"
-          class="size-4.5 group-aria-pressed:hidden"
-          aria-hidden="true"
-        />
-        <Icon
-          name="lucide:menu"
-          class="hidden size-4.5 group-aria-pressed:block"
-          aria-hidden="true"
-        />
-      </button>
+      <div class="flex items-center rounded-lg border border-zinc-200 bg-zinc-100/80 p-0.5">
+        <button
+          id="view-list-btn"
+          type="button"
+          aria-pressed="true"
+          class="flex cursor-pointer items-center gap-1.5 rounded-md px-3 py-1.5 font-mono text-xs font-medium transition-all bg-white text-zinc-900 shadow-2xs"
+        >
+          <Icon name="lucide:list" class="size-3.5" />
+          <span class="hidden sm:inline">List</span>
+        </button>
+        <button
+          id="view-grid-btn"
+          type="button"
+          aria-pressed="false"
+          class="flex cursor-pointer items-center gap-1.5 rounded-md px-3 py-1.5 font-mono text-xs font-medium text-zinc-500 transition-all hover:text-zinc-900"
+        >
+          <Icon name="lucide:layout-grid" class="size-3.5" />
+          <span class="hidden sm:inline">Grid</span>
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- SECTION 1: CORE ARCHITECTURE & INDEPENDENT REPOSITORIES -->
-  <section class="mt-12">
-    <div class="flex items-center justify-between border-b border-zinc-200 pb-3">
-      <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-zinc-600">
-        <Icon name="lucide:layers" class="size-3.5 text-blue-500" aria-hidden="true" />
-        <span>Core_Architectures // Independent_Labs</span>
+  <!-- ==================== VIEW 1: LIST VIEW (DEFAULT) ==================== -->
+  <div id="works-list-view" class="mt-10">
+    <!-- SECTION 1: CLIENT COMMISSIONS -->
+    <section>
+      <div class="flex items-center justify-between pb-3">
+        <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-emerald-700">
+          <Icon
+            name="lucide:briefcase-business"
+            class="size-3.5 text-emerald-600"
+            aria-hidden="true"
+          />
+          <span>Client_Work // Commercial_Deliverables</span>
+        </div>
+        <span class="font-mono text-xs text-zinc-400">// 01 REPOSITORY</span>
       </div>
-      <span class="font-mono text-xs text-zinc-400">// 03 REPOSITORIES</span>
-    </div>
 
-    <div class="works-container mt-6 grid grid-cols-1 gap-6 transition-all md:grid-cols-2">
-      {engineeringWorks.map((work) => {
-        const style = statusStyles[work.status] ?? {
-          dot: "bg-zinc-400",
-          badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
-        };
-        const levelStyle = levelStyles[work.level] ?? {
-          badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
-        };
+      <div class="border-y border-zinc-200 divide-y divide-zinc-200/80">
+        {clientWorks.map((work) => {
+          const style = statusStyles[work.status] ?? {
+            dot: "bg-zinc-400",
+            badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+          };
+          const levelStyle = levelStyles[work.level] ?? {
+            badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+          };
 
-        return (
-          <article
-            data-work-card
-            class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md"
-          >
-            <div>
-              <!-- Top Row: Status + Level + Category -->
-              <div class="flex items-center justify-between gap-3">
-                <div class="flex flex-wrap items-center gap-2">
+          return (
+            <div data-project-item class="group">
+              <!-- Clickable List Row -->
+              <button
+                type="button"
+                data-project-trigger
+                aria-expanded="false"
+                class="flex w-full cursor-pointer items-center justify-between py-4 sm:py-5 px-3 sm:px-4 text-left transition-colors hover:bg-zinc-50/80"
+              >
+                <!-- Number -->
+                <span class="font-mono text-xs sm:text-sm text-zinc-400 w-12 sm:w-16 shrink-0 group-hover:text-zinc-700">
+                  {work.num}
+                </span>
+
+                <!-- Title & Client Badge -->
+                <div class="flex items-center gap-2 w-48 sm:w-56 md:w-64 shrink-0 min-w-0">
+                  <span class="font-display text-sm sm:text-base font-semibold text-zinc-900 group-hover:text-blue-600 transition-colors truncate">
+                    {work.title}
+                  </span>
+                  <span class="hidden sm:inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-medium uppercase text-emerald-700">
+                    Client
+                  </span>
+                </div>
+
+                <!-- Category -->
+                <span class="font-mono text-xs text-zinc-500 hidden sm:block flex-1 truncate">
+                  {work.category}
+                </span>
+
+                <!-- Domain -->
+                <span class="font-mono text-xs text-zinc-400 w-44 sm:w-52 text-right shrink-0 hidden md:block group-hover:text-zinc-700 transition-colors">
+                  {work.domain}
+                </span>
+
+                <!-- Expand Chevron Indicator -->
+                <div class="flex items-center justify-center size-7 rounded-full border border-zinc-200 bg-white text-zinc-400 shrink-0 ml-3 sm:ml-4 group-hover:border-zinc-300 group-hover:text-zinc-900 transition-all">
+                  <Icon
+                    name="lucide:chevron-down"
+                    class="size-3.5 transition-transform duration-200"
+                    data-chevron
+                  />
+                </div>
+              </button>
+
+              <!-- Collapsible Description Drawer -->
+              <div
+                data-project-drawer
+                class="hidden rounded-xl border border-zinc-200 bg-zinc-50/70 p-5 sm:p-6 my-3 shadow-xs"
+              >
+                <div class="flex flex-wrap items-center gap-2 mb-3">
                   <span
                     class:list={[
                       "flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-wide uppercase",
@@ -175,7 +238,6 @@ const levelStyles: Record<string, { badge: string }> = {
                     <span class:list={["size-1.5 rounded-full", style.dot]} />
                     {work.status}
                   </span>
-
                   <span
                     class:list={[
                       "rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-wide uppercase",
@@ -184,98 +246,122 @@ const levelStyles: Record<string, { badge: string }> = {
                   >
                     {work.level}
                   </span>
+                  <span class="font-mono text-xs uppercase tracking-wider text-blue-500 ml-auto">
+                    {work.category}
+                  </span>
                 </div>
 
-                <span class="font-mono text-xs font-medium uppercase tracking-wider text-blue-500">
+                <p class="text-sm leading-relaxed text-zinc-700 mt-2 max-w-3xl">
+                  {work.description}
+                </p>
+
+                <ul class="mt-4 flex flex-wrap gap-1.5">
+                  {work.tech.map((t) => (
+                    <li class="rounded-md border border-zinc-200/80 bg-white px-2 py-0.5 font-mono text-[11px] text-zinc-600">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+
+                <div class="mt-5 flex items-center justify-between border-t border-zinc-200/60 pt-4">
+                  {work.github && (
+                    <a
+                      href={work.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center gap-1.5 font-mono text-xs text-zinc-500 transition-colors hover:text-zinc-900"
+                    >
+                      <Icon name="simple-icons:github" class="size-4" aria-hidden="true" />
+                      <span>Source</span>
+                    </a>
+                  )}
+
+                  {work.href && (
+                    <a
+                      href={work.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="ml-auto flex items-center gap-1.5 rounded-full bg-zinc-900 px-4 py-2 font-mono text-xs font-medium text-zinc-100 transition-colors hover:bg-zinc-800"
+                    >
+                      <span>Live Demo</span>
+                      <Icon name="lucide:arrow-up-right" class="size-3.5" aria-hidden="true" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- SECTION 2: CORE ARCHITECTURE & INDEPENDENT REPOSITORIES (With clean generous top margin) -->
+    <section class="mt-16">
+      <div class="flex items-center justify-between pb-3">
+        <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-zinc-600">
+          <Icon name="lucide:layers" class="size-3.5 text-blue-500" aria-hidden="true" />
+          <span>Core_Architectures // Independent_Labs</span>
+        </div>
+        <span class="font-mono text-xs text-zinc-400">// 03 REPOSITORIES</span>
+      </div>
+
+      <div class="border-y border-zinc-200 divide-y divide-zinc-200/80">
+        {engineeringWorks.map((work) => {
+          const style = statusStyles[work.status] ?? {
+            dot: "bg-zinc-400",
+            badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+          };
+          const levelStyle = levelStyles[work.level] ?? {
+            badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+          };
+
+          return (
+            <div data-project-item class="group">
+              <!-- Clickable List Row -->
+              <button
+                type="button"
+                data-project-trigger
+                aria-expanded="false"
+                class="flex w-full cursor-pointer items-center justify-between py-4 sm:py-5 px-3 sm:px-4 text-left transition-colors hover:bg-zinc-50/80"
+              >
+                <!-- Number -->
+                <span class="font-mono text-xs sm:text-sm text-zinc-400 w-12 sm:w-16 shrink-0 group-hover:text-zinc-700">
+                  {work.num}
+                </span>
+
+                <!-- Title -->
+                <div class="w-48 sm:w-56 md:w-64 shrink-0 min-w-0">
+                  <span class="font-display text-sm sm:text-base font-semibold text-zinc-900 group-hover:text-blue-600 transition-colors truncate">
+                    {work.title}
+                  </span>
+                </div>
+
+                <!-- Category -->
+                <span class="font-mono text-xs text-zinc-500 hidden sm:block flex-1 truncate">
                   {work.category}
                 </span>
-              </div>
 
-              <!-- Title & Description -->
-              <h2 class="font-display mt-4 text-xl font-bold tracking-tight text-zinc-900 transition-colors group-hover:text-blue-600">
-                {work.title}
-              </h2>
+                <!-- Domain -->
+                <span class="font-mono text-xs text-zinc-400 w-44 sm:w-52 text-right shrink-0 hidden md:block group-hover:text-zinc-700 transition-colors">
+                  {work.domain}
+                </span>
 
-              <p class="mt-2.5 text-sm leading-relaxed text-zinc-600">{work.description}</p>
+                <!-- Expand Chevron Indicator -->
+                <div class="flex items-center justify-center size-7 rounded-full border border-zinc-200 bg-white text-zinc-400 shrink-0 ml-3 sm:ml-4 group-hover:border-zinc-300 group-hover:text-zinc-900 transition-all">
+                  <Icon
+                    name="lucide:chevron-down"
+                    class="size-3.5 transition-transform duration-200"
+                    data-chevron
+                  />
+                </div>
+              </button>
 
-              <!-- Tech Stack Chips -->
-              <ul class="mt-5 flex flex-wrap gap-1.5">
-                {work.tech.map((t) => (
-                  <li class="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] text-zinc-600">
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <!-- Bottom Action Row -->
-            <div class="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4">
-              <div class="flex items-center gap-3">
-                {work.github && (
-                  <a
-                    href={work.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${work.title} source code on GitHub`}
-                    class="flex items-center gap-1.5 font-mono text-xs text-zinc-500 transition-colors hover:text-zinc-900"
-                  >
-                    <Icon name="simple-icons:github" class="size-4" aria-hidden="true" />
-                    <span>Source</span>
-                  </a>
-                )}
-              </div>
-
-              {work.href && (
-                <a
-                  href={work.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center gap-1 rounded-full bg-zinc-900 px-3.5 py-1.5 font-mono text-xs font-medium text-zinc-100 transition-colors hover:bg-zinc-800"
-                >
-                  <span>Live Demo</span>
-                  <Icon name="lucide:arrow-up-right" class="size-3.5" aria-hidden="true" />
-                </a>
-              )}
-            </div>
-          </article>
-        );
-      })}
-    </div>
-  </section>
-
-  <!-- SECTION 2: CLIENT COMMISSIONS & DELIVERABLES -->
-  <section class="mt-14">
-    <div class="flex items-center justify-between border-b border-zinc-200 pb-3">
-      <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-emerald-700">
-        <Icon
-          name="lucide:briefcase-business"
-          class="size-3.5 text-emerald-600"
-          aria-hidden="true"
-        />
-        <span>Client_Work // Commercial_Deliverables</span>
-      </div>
-      <span class="font-mono text-xs text-zinc-400">// 01 REPOSITORY</span>
-    </div>
-
-    <div class="works-container mt-6 grid grid-cols-1 gap-6 transition-all md:grid-cols-2">
-      {clientWorks.map((work) => {
-        const style = statusStyles[work.status] ?? {
-          dot: "bg-zinc-400",
-          badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
-        };
-        const levelStyle = levelStyles[work.level] ?? {
-          badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
-        };
-
-        return (
-          <article
-            data-work-card
-            class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-4 sm:p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md"
-          >
-            <div>
-              <!-- Top Row: Status + Level + Client Tag + Category -->
-              <div class="flex items-center justify-between gap-3">
-                <div class="flex flex-wrap items-center gap-2">
+              <!-- Collapsible Description Drawer -->
+              <div
+                data-project-drawer
+                class="hidden rounded-xl border border-zinc-200 bg-zinc-50/70 p-5 sm:p-6 my-3 shadow-xs"
+              >
+                <div class="flex flex-wrap items-center gap-2 mb-3">
                   <span
                     class:list={[
                       "flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-wide uppercase",
@@ -285,7 +371,6 @@ const levelStyles: Record<string, { badge: string }> = {
                     <span class:list={["size-1.5 rounded-full", style.dot]} />
                     {work.status}
                   </span>
-
                   <span
                     class:list={[
                       "rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-wide uppercase",
@@ -294,119 +379,380 @@ const levelStyles: Record<string, { badge: string }> = {
                   >
                     {work.level}
                   </span>
-
-                  <span class="rounded-full border border-emerald-200 bg-emerald-50/70 px-2.5 py-0.5 font-mono text-[11px] font-medium uppercase tracking-wide text-emerald-700">
-                    Client Project
+                  <span class="font-mono text-xs uppercase tracking-wider text-blue-500 ml-auto">
+                    {work.category}
                   </span>
                 </div>
 
-                <span class="font-mono text-xs font-medium uppercase tracking-wider text-blue-500">
-                  {work.category}
-                </span>
+                <p class="text-sm leading-relaxed text-zinc-700 mt-2 max-w-3xl">
+                  {work.description}
+                </p>
+
+                <ul class="mt-4 flex flex-wrap gap-1.5">
+                  {work.tech.map((t) => (
+                    <li class="rounded-md border border-zinc-200/80 bg-white px-2 py-0.5 font-mono text-[11px] text-zinc-600">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+
+                <div class="mt-5 flex items-center justify-between border-t border-zinc-200/60 pt-4">
+                  {work.github && (
+                    <a
+                      href={work.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center gap-1.5 font-mono text-xs text-zinc-500 transition-colors hover:text-zinc-900"
+                    >
+                      <Icon name="simple-icons:github" class="size-4" aria-hidden="true" />
+                      <span>Source</span>
+                    </a>
+                  )}
+
+                  {work.href && (
+                    <a
+                      href={work.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="ml-auto flex items-center gap-1.5 rounded-full bg-zinc-900 px-4 py-2 font-mono text-xs font-medium text-zinc-100 transition-colors hover:bg-zinc-800"
+                    >
+                      <span>Live Demo</span>
+                      <Icon name="lucide:arrow-up-right" class="size-3.5" aria-hidden="true" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== VIEW 2: GRID VIEW ==================== -->
+  <div id="works-grid-view" class="mt-10 hidden">
+    <!-- CLIENT COMMISSIONS IN GRID -->
+    <section>
+      <div class="flex items-center justify-between pb-3">
+        <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-emerald-700">
+          <Icon
+            name="lucide:briefcase-business"
+            class="size-3.5 text-emerald-600"
+            aria-hidden="true"
+          />
+          <span>Client_Work // Commercial_Deliverables</span>
+        </div>
+        <span class="font-mono text-xs text-zinc-400">// 01 REPOSITORY</span>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        {clientWorks.map((work) => {
+          const style = statusStyles[work.status] ?? {
+            dot: "bg-zinc-400",
+            badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+          };
+          const levelStyle = levelStyles[work.level] ?? {
+            badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+          };
+
+          return (
+            <article
+              data-project-item
+              class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-5 sm:p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md cursor-pointer"
+              data-grid-card
+            >
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="font-mono text-xs text-zinc-400">{work.num}</span>
+                    <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-medium uppercase text-emerald-700">
+                      Client
+                    </span>
+                  </div>
+                  <span
+                    class:list={[
+                      "flex items-center gap-1.5 rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase",
+                      style.badge,
+                    ]}
+                  >
+                    <span class:list={["size-1.5 rounded-full", style.dot]} />
+                    {work.status}
+                  </span>
+                </div>
+
+                <h2 class="font-display mt-4 text-xl font-bold tracking-tight text-zinc-900 group-hover:text-blue-600 transition-colors">
+                  {work.title}
+                </h2>
+                <p class="font-mono text-xs text-zinc-500 mt-1">{work.category}</p>
+
+                <!-- Expandable details in grid -->
+                <div data-grid-details class="mt-4 hidden border-t border-zinc-100 pt-3">
+                  <p class="text-xs sm:text-sm leading-relaxed text-zinc-600">{work.description}</p>
+                  <ul class="mt-3 flex flex-wrap gap-1">
+                    {work.tech.map((t) => (
+                      <li class="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[10px] text-zinc-600">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
-              <!-- Title & Description -->
-              <h2 class="font-display mt-4 text-xl font-bold tracking-tight text-zinc-900 transition-colors group-hover:text-blue-600">
-                {work.title}
-              </h2>
+              <div class="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4">
+                <span
+                  class="font-mono text-[11px] text-blue-500 flex items-center gap-1"
+                  data-expand-label
+                >
+                  <span>Show Description</span>
+                  <Icon
+                    name="lucide:chevron-down"
+                    class="size-3 transition-transform"
+                    data-grid-chevron
+                  />
+                </span>
 
-              <p class="mt-2.5 text-sm leading-relaxed text-zinc-600">{work.description}</p>
-
-              <!-- Tech Stack Chips -->
-              <ul class="mt-5 flex flex-wrap gap-1.5">
-                {work.tech.map((t) => (
-                  <li class="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] text-zinc-600">
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <!-- Bottom Action Row -->
-            <div class="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4">
-              <div class="flex items-center gap-3">
-                {work.github && (
+                {work.href && (
                   <a
-                    href={work.github}
+                    href={work.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${work.title} source code on GitHub`}
-                    class="flex items-center gap-1.5 font-mono text-xs text-zinc-500 transition-colors hover:text-zinc-900"
+                    class="flex items-center gap-1 rounded-full bg-zinc-900 px-3 py-1 font-mono text-xs font-medium text-zinc-100 hover:bg-zinc-800"
+                    onclick="event.stopPropagation()"
                   >
-                    <Icon name="simple-icons:github" class="size-4" aria-hidden="true" />
-                    <span>Source</span>
+                    <span>Demo</span>
+                    <Icon name="lucide:arrow-up-right" class="size-3" aria-hidden="true" />
                   </a>
                 )}
               </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
 
-              {work.href && (
-                <a
-                  href={work.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center gap-1 rounded-full bg-zinc-900 px-3.5 py-1.5 font-mono text-xs font-medium text-zinc-100 transition-colors hover:bg-zinc-800"
+    <!-- CORE ARCHITECTURES IN GRID (With clean generous top margin) -->
+    <section class="mt-16">
+      <div class="flex items-center justify-between pb-3">
+        <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-zinc-600">
+          <Icon name="lucide:layers" class="size-3.5 text-blue-500" aria-hidden="true" />
+          <span>Core_Architectures // Independent_Labs</span>
+        </div>
+        <span class="font-mono text-xs text-zinc-400">// 03 REPOSITORIES</span>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        {engineeringWorks.map((work) => {
+          const style = statusStyles[work.status] ?? {
+            dot: "bg-zinc-400",
+            badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+          };
+          const levelStyle = levelStyles[work.level] ?? {
+            badge: "border-zinc-200 bg-zinc-50 text-zinc-600",
+          };
+
+          return (
+            <article
+              data-project-item
+              class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-5 sm:p-6 shadow-xs transition-all hover:border-zinc-300 hover:shadow-md cursor-pointer"
+              data-grid-card
+            >
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="font-mono text-xs text-zinc-400">{work.num}</span>
+                  <div class="flex items-center gap-1.5">
+                    <span
+                      class:list={[
+                        "rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase",
+                        levelStyle.badge,
+                      ]}
+                    >
+                      {work.level}
+                    </span>
+                    <span
+                      class:list={[
+                        "flex items-center gap-1.5 rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase",
+                        style.badge,
+                      ]}
+                    >
+                      <span class:list={["size-1.5 rounded-full", style.dot]} />
+                      {work.status}
+                    </span>
+                  </div>
+                </div>
+
+                <h2 class="font-display mt-4 text-xl font-bold tracking-tight text-zinc-900 group-hover:text-blue-600 transition-colors">
+                  {work.title}
+                </h2>
+                <p class="font-mono text-xs text-zinc-500 mt-1">{work.category}</p>
+
+                <!-- Expandable details in grid -->
+                <div data-grid-details class="mt-4 hidden border-t border-zinc-100 pt-3">
+                  <p class="text-xs sm:text-sm leading-relaxed text-zinc-600">{work.description}</p>
+                  <ul class="mt-3 flex flex-wrap gap-1">
+                    {work.tech.map((t) => (
+                      <li class="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[10px] text-zinc-600">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mt-6 flex items-center justify-between border-t border-zinc-100 pt-4">
+                <span
+                  class="font-mono text-[11px] text-blue-500 flex items-center gap-1"
+                  data-expand-label
                 >
-                  <span>Live Demo</span>
-                  <Icon name="lucide:arrow-up-right" class="size-3.5" aria-hidden="true" />
-                </a>
-              )}
-            </div>
-          </article>
-        );
-      })}
-    </div>
-  </section>
+                  <span>Show Description</span>
+                  <Icon
+                    name="lucide:chevron-down"
+                    class="size-3 transition-transform"
+                    data-grid-chevron
+                  />
+                </span>
+
+                <div class="flex items-center gap-2" onclick="event.stopPropagation()">
+                  {work.github && (
+                    <a
+                      href={work.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center gap-1 font-mono text-xs text-zinc-500 hover:text-zinc-900"
+                    >
+                      <Icon name="simple-icons:github" class="size-3.5" aria-hidden="true" />
+                    </a>
+                  )}
+                  {work.href && (
+                    <a
+                      href={work.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center gap-1 rounded-full bg-zinc-900 px-3 py-1 font-mono text-xs font-medium text-zinc-100 hover:bg-zinc-800"
+                    >
+                      <span>Demo</span>
+                      <Icon name="lucide:arrow-up-right" class="size-3" aria-hidden="true" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  </div>
 </main>
 
 <script>
   import { inView, animate } from "motion";
 
-  function initWorksView() {
-    const btn = document.querySelector<HTMLButtonElement>("#view-toggle");
-    const containers = document.querySelectorAll<HTMLElement>(".works-container");
-    if (btn && containers.length > 0) {
-      btn.addEventListener("click", () => {
-        const isList = btn.getAttribute("aria-pressed") !== "true";
-        btn.setAttribute("aria-pressed", String(isList));
-        btn.setAttribute("aria-label", isList ? "Switch to grid view" : "Switch to list view");
+  function initWorksPage() {
+    const listBtn = document.querySelector<HTMLButtonElement>("#view-list-btn");
+    const gridBtn = document.querySelector<HTMLButtonElement>("#view-grid-btn");
+    const listView = document.querySelector<HTMLElement>("#works-list-view");
+    const gridView = document.querySelector<HTMLElement>("#works-grid-view");
 
-        containers.forEach((container) => {
-          if (isList) {
-            container.classList.remove("md:grid-cols-2");
-            container.classList.add("grid-cols-1");
-          } else {
-            container.classList.remove("grid-cols-1");
-            container.classList.add("md:grid-cols-2");
-          }
-        });
-      });
+    // 1. View switcher logic (List View is active by default)
+    function setView(isList: boolean) {
+      if (!listView || !gridView || !listBtn || !gridBtn) return;
+
+      if (isList) {
+        listView.classList.remove("hidden");
+        gridView.classList.add("hidden");
+
+        listBtn.classList.add("bg-white", "text-zinc-900", "shadow-2xs");
+        listBtn.classList.remove("text-zinc-500");
+        listBtn.setAttribute("aria-pressed", "true");
+
+        gridBtn.classList.remove("bg-white", "text-zinc-900", "shadow-2xs");
+        gridBtn.classList.add("text-zinc-500");
+        gridBtn.setAttribute("aria-pressed", "false");
+      } else {
+        listView.classList.add("hidden");
+        gridView.classList.remove("hidden");
+
+        gridBtn.classList.add("bg-white", "text-zinc-900", "shadow-2xs");
+        gridBtn.classList.remove("text-zinc-500");
+        gridBtn.setAttribute("aria-pressed", "true");
+
+        listBtn.classList.remove("bg-white", "text-zinc-900", "shadow-2xs");
+        listBtn.classList.add("text-zinc-500");
+        listBtn.setAttribute("aria-pressed", "false");
+      }
     }
 
+    listBtn?.addEventListener("click", () => setView(true));
+    gridBtn?.addEventListener("click", () => setView(false));
+
+    // 2. Interactive Accordion for List View rows
+    const triggers = document.querySelectorAll<HTMLButtonElement>("[data-project-trigger]");
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const item = trigger.closest("[data-project-item]");
+        const drawer = item?.querySelector<HTMLElement>("[data-project-drawer]");
+        const chevron = trigger.querySelector<HTMLElement>("[data-chevron]");
+        if (!drawer) return;
+
+        const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+        if (isExpanded) {
+          trigger.setAttribute("aria-expanded", "false");
+          drawer.classList.add("hidden");
+          if (chevron) chevron.style.transform = "rotate(0deg)";
+        } else {
+          trigger.setAttribute("aria-expanded", "true");
+          drawer.classList.remove("hidden");
+          if (chevron) chevron.style.transform = "rotate(180deg)";
+          animate(drawer, { opacity: [0, 1], y: [-6, 0] }, { duration: 0.25, ease: "easeOut" });
+        }
+      });
+    });
+
+    // 3. Interactive details toggle for Grid View cards
+    const gridCards = document.querySelectorAll<HTMLElement>("[data-grid-card]");
+    gridCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        const details = card.querySelector<HTMLElement>("[data-grid-details]");
+        const chevron = card.querySelector<HTMLElement>("[data-grid-chevron]");
+        const label = card.querySelector<HTMLElement>("[data-expand-label] span");
+        if (!details) return;
+
+        const isHidden = details.classList.contains("hidden");
+        if (isHidden) {
+          details.classList.remove("hidden");
+          if (chevron) chevron.style.transform = "rotate(180deg)";
+          if (label) label.textContent = "Hide Description";
+          animate(details, { opacity: [0, 1], y: [-6, 0] }, { duration: 0.25, ease: "easeOut" });
+        } else {
+          details.classList.add("hidden");
+          if (chevron) chevron.style.transform = "rotate(0deg)";
+          if (label) label.textContent = "Show Description";
+        }
+      });
+    });
+
+    // 4. InView Fade-In ONLY (No fade-out)
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const cards = document.querySelectorAll<HTMLElement>("[data-work-card]");
-    cards.forEach((card) => {
+    const items = document.querySelectorAll<HTMLElement>("[data-project-item]");
+    items.forEach((item) => {
       inView(
-        card,
+        item,
         () => {
           animate(
-            card,
-            { opacity: [0, 1], y: [24, 0] },
-            { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+            item,
+            { opacity: [0, 1], y: [16, 0] },
+            { duration: 0.55, ease: [0.16, 1, 0.3, 1] }
           );
-          return () => {
-            animate(card, { opacity: [1, 0.15], y: [0, 14] }, { duration: 0.45, ease: "easeOut" });
-          };
         },
-        { margin: "-5% 0px -5% 0px" }
+        { margin: "-5% 0px" }
       );
     });
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initWorksView);
+    document.addEventListener("DOMContentLoaded", initWorksPage);
   } else {
-    initWorksView();
+    initWorksPage();
   }
-  document.addEventListener("astro:page-load", initWorksView);
+  document.addEventListener("astro:page-load", initWorksPage);
 </script>

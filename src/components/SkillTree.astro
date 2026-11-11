@@ -117,15 +117,6 @@ const tree: { id: Tone; label: string; nodes: { title: string; leaves: string[] 
   </ul>
 </div>
 
-<style>
-  @media (prefers-reduced-motion: no-preference) {
-    [data-tree-reveal] {
-      opacity: 0;
-      transform: translateY(16px);
-    }
-  }
-</style>
-
 <script>
   import { inView, animate, stagger } from "motion";
 
@@ -145,11 +136,8 @@ const tree: { id: Tone; label: string; nodes: { title: string; leaves: string[] 
           { opacity: [0, 1], y: [16, 0] },
           { delay: stagger(0.06), duration: 0.6, ease: [0.16, 1, 0.3, 1] }
         );
-        return () => {
-          animate(items, { opacity: [1, 0.2], y: [0, 12] }, { duration: 0.45, ease: "easeOut" });
-        };
       },
-      { margin: "-10% 0px -10% 0px" }
+      { margin: "-5% 0px" }
     );
   }
 
