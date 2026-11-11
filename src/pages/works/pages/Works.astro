@@ -194,7 +194,7 @@ const levelStyles: Record<string, { badge: string }> = {
                 </span>
 
                 <!-- Title & Client Badge -->
-                <div class="flex items-center gap-2 w-48 sm:w-56 md:w-64 shrink-0 min-w-0">
+                <div class="flex items-center gap-2 w-44 sm:w-52 md:w-56 lg:w-64 shrink-0 min-w-0">
                   <span class="font-display text-sm sm:text-base font-semibold text-zinc-900 group-hover:text-blue-600 transition-colors truncate">
                     {work.title}
                   </span>
@@ -209,7 +209,7 @@ const levelStyles: Record<string, { badge: string }> = {
                 </span>
 
                 <!-- Domain -->
-                <span class="font-mono text-xs text-zinc-400 w-44 sm:w-52 text-right shrink-0 hidden md:block group-hover:text-zinc-700 transition-colors">
+                <span class="font-mono text-xs text-zinc-400 w-40 sm:w-48 lg:w-52 text-right shrink-0 hidden lg:block group-hover:text-zinc-700 transition-colors">
                   {work.domain}
                 </span>
 
@@ -330,7 +330,7 @@ const levelStyles: Record<string, { badge: string }> = {
                 </span>
 
                 <!-- Title -->
-                <div class="w-48 sm:w-56 md:w-64 shrink-0 min-w-0">
+                <div class="w-44 sm:w-52 md:w-56 lg:w-64 shrink-0 min-w-0">
                   <span class="font-display text-sm sm:text-base font-semibold text-zinc-900 group-hover:text-blue-600 transition-colors truncate">
                     {work.title}
                   </span>
@@ -342,7 +342,7 @@ const levelStyles: Record<string, { badge: string }> = {
                 </span>
 
                 <!-- Domain -->
-                <span class="font-mono text-xs text-zinc-400 w-44 sm:w-52 text-right shrink-0 hidden md:block group-hover:text-zinc-700 transition-colors">
+                <span class="font-mono text-xs text-zinc-400 w-40 sm:w-48 lg:w-52 text-right shrink-0 hidden lg:block group-hover:text-zinc-700 transition-colors">
                   {work.domain}
                 </span>
 
@@ -445,7 +445,7 @@ const levelStyles: Record<string, { badge: string }> = {
         <span class="font-mono text-xs text-zinc-400">// 01 REPOSITORY</span>
       </div>
 
-      <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 items-start">
         {clientWorks.map((work) => {
           const style = statusStyles[work.status] ?? {
             dot: "bg-zinc-400",
@@ -511,18 +511,29 @@ const levelStyles: Record<string, { badge: string }> = {
                   />
                 </span>
 
-                {work.href && (
-                  <a
-                    href={work.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex items-center gap-1 rounded-full bg-zinc-900 px-3 py-1 font-mono text-xs font-medium text-zinc-100 hover:bg-zinc-800"
-                    onclick="event.stopPropagation()"
-                  >
-                    <span>Demo</span>
-                    <Icon name="lucide:arrow-up-right" class="size-3" aria-hidden="true" />
-                  </a>
-                )}
+                <div class="flex items-center gap-2" onclick="event.stopPropagation()">
+                  {work.github && (
+                    <a
+                      href={work.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center gap-1 font-mono text-xs text-zinc-500 hover:text-zinc-900"
+                    >
+                      <Icon name="simple-icons:github" class="size-3.5" aria-hidden="true" />
+                    </a>
+                  )}
+                  {work.href && (
+                    <a
+                      href={work.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-center gap-1 rounded-full bg-zinc-900 px-3 py-1 font-mono text-xs font-medium text-zinc-100 hover:bg-zinc-800"
+                    >
+                      <span>Demo</span>
+                      <Icon name="lucide:arrow-up-right" class="size-3" aria-hidden="true" />
+                    </a>
+                  )}
+                </div>
               </div>
             </article>
           );
@@ -540,7 +551,7 @@ const levelStyles: Record<string, { badge: string }> = {
         <span class="font-mono text-xs text-zinc-400">// 03 REPOSITORIES</span>
       </div>
 
-      <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 items-start">
         {engineeringWorks.map((work) => {
           const style = statusStyles[work.status] ?? {
             dot: "bg-zinc-400",
