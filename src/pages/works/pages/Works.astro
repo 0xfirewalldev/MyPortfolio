@@ -359,10 +359,7 @@ const levelStyles: Record<string, { badge: string }> = {
 </main>
 
 <script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
+  import { inView, animate } from "motion";
 
   function initWorksView() {
     const btn = document.querySelector<HTMLButtonElement>("#view-toggle");
@@ -385,28 +382,24 @@ const levelStyles: Record<string, { badge: string }> = {
       });
     }
 
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const cards = document.querySelectorAll<HTMLElement>("[data-work-card]");
-      if (cards.length === 0) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      ScrollTrigger.batch(cards, {
-        start: "top 90%",
-        once: true,
-        onEnter: (batch) =>
-          gsap.fromTo(
-            batch,
-            { opacity: 0, y: 24 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              stagger: 0.1,
-              ease: "power3.out",
-            }
-          ),
-      });
-      ScrollTrigger.refresh();
+    const cards = document.querySelectorAll<HTMLElement>("[data-work-card]");
+    cards.forEach((card) => {
+      inView(
+        card,
+        () => {
+          animate(
+            card,
+            { opacity: [0, 1], y: [24, 0] },
+            { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+          );
+          return () => {
+            animate(card, { opacity: [1, 0.15], y: [0, 14] }, { duration: 0.45, ease: "easeOut" });
+          };
+        },
+        { margin: "-5% 0px -5% 0px" }
+      );
     });
   }
 

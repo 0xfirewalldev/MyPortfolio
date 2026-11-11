@@ -127,25 +127,30 @@ const tree: { id: Tone; label: string; nodes: { title: string; leaves: string[] 
 </style>
 
 <script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
+  import { inView, animate, stagger } from "motion";
 
   function initSkillTree() {
     const root = document.querySelector<HTMLElement>("#skill-tree");
     if (!root) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      ScrollTrigger.batch(root.querySelectorAll("[data-tree-reveal]"), {
-        start: "top 88%",
-        once: true,
-        onEnter: (batch) =>
-          gsap.to(batch, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.08 }),
-      });
-      ScrollTrigger.refresh();
-    });
+    const items = root.querySelectorAll<HTMLElement>("[data-tree-reveal]");
+    if (items.length === 0) return;
+
+    inView(
+      root,
+      () => {
+        animate(
+          items,
+          { opacity: [0, 1], y: [16, 0] },
+          { delay: stagger(0.06), duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+        );
+        return () => {
+          animate(items, { opacity: [1, 0.2], y: [0, 12] }, { duration: 0.45, ease: "easeOut" });
+        };
+      },
+      { margin: "-10% 0px -10% 0px" }
+    );
   }
 
   if (document.readyState === "loading") {

@@ -56,42 +56,37 @@ const lines = [
 </style>
 
 <script>
-  import { gsap } from "gsap";
+  import { animate } from "motion";
 
   function initTerminalAnimation() {
     const terminal = document.querySelector<HTMLElement>("#hero-terminal");
     if (!terminal) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const lines = terminal.querySelectorAll<HTMLElement>("[data-terminal-line]");
-      if (lines.length === 0) return;
+    const lines = terminal.querySelectorAll<HTMLElement>("[data-terminal-line]");
+    if (lines.length === 0) return;
 
-      const tl = gsap.timeline({ delay: 0.5 });
-
+    const runTerminal = () => {
+      let delay = 0.5;
       lines.forEach((line) => {
         const cmd = line.querySelector<HTMLElement>(".term-cmd");
         const out = line.querySelector<HTMLElement>(".term-out");
 
         if (cmd && out) {
-          tl.from(cmd, {
-            opacity: 0,
-            x: -4,
-            duration: 0.35,
-            ease: "power1.out",
-          }).from(
-            out,
-            {
-              opacity: 0,
-              y: 4,
-              duration: 0.4,
-              ease: "power2.out",
-            },
-            "+=0.1"
-          );
+          animate(cmd, { opacity: [0, 1], x: [-4, 0] }, { delay, duration: 0.35, ease: "easeOut" });
+          delay += 0.3;
+          animate(out, { opacity: [0, 1], y: [4, 0] }, { delay, duration: 0.4, ease: "easeOut" });
+          delay += 0.3;
         }
       });
-    });
+    };
+
+    const splash = document.getElementById("splash-screen");
+    if (splash && !sessionStorage.getItem("portfolio_booted")) {
+      document.addEventListener("splash-finished", runTerminal, { once: true });
+    } else {
+      runTerminal();
+    }
   }
 
   if (document.readyState === "loading") {

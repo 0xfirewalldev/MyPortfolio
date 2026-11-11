@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Navbar from "../components/uiComp/Navbar.astro";
 import Dock from "../components/Dock.astro";
+import SplashScreen from "../components/SplashScreen.astro";
 
 interface Props {
   title: string;
@@ -49,6 +50,7 @@ const imageUrl = new URL(image, canonical);
   </head>
 
   <body class="flex min-h-screen flex-col px-4 sm:px-6 md:px-10 py-4 sm:py-6 antialiased max-w-6xl mx-auto w-full">
+    <SplashScreen />
     <Navbar />
     <slot />
     <Dock />

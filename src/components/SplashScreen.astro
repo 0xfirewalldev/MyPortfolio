@@ -1,0 +1,129 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<script is:inline>
+  if (sessionStorage.getItem("portfolio_booted") === "true") {
+    document.documentElement.classList.add("booted");
+  }
+</script>
+
+<div
+  id="splash-screen"
+  class="fixed inset-0 z-[9999] flex flex-col justify-between bg-zinc-950 p-6 md:p-12 text-zinc-100 font-mono select-none overflow-hidden"
+  aria-hidden="true"
+>
+  <!-- Top terminal bar -->
+  <div class="flex items-center justify-between text-xs tracking-wider uppercase text-zinc-500">
+    <div class="flex items-center gap-2">
+      <span class="size-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="text-zinc-300">SYS_BOOT // INITIALIZING</span>
+    </div>
+    <span>AUTH: 0xFIREWALL</span>
+  </div>
+
+  <!-- Center Branding & Progress -->
+  <div class="mx-auto flex w-full max-w-lg flex-col items-center justify-center text-center">
+    <div class="mb-6 flex size-14 items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-900/80 shadow-2xl">
+      <Icon name="lucide:shield-check" class="size-7 text-blue-400" />
+    </div>
+
+    <h1 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-zinc-100">
+      Irikefe M. Kesiena
+    </h1>
+    <p class="mt-1 text-xs tracking-widest uppercase text-zinc-500">
+      Full Stack Architecture & Offensive Security
+    </p>
+
+    <!-- Progress indicator -->
+    <div class="mt-8 w-full">
+      <div class="flex justify-between text-[11px] text-zinc-500 mb-2">
+        <span id="splash-status">LOADING SYSTEM MODULES...</span>
+        <span id="splash-percentage">0%</span>
+      </div>
+      <div class="h-1 w-full overflow-hidden rounded-full bg-zinc-900 border border-zinc-800">
+        <div
+          id="splash-progress-bar"
+          class="h-full w-0 bg-blue-500 rounded-full transition-all duration-75"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Telemetry -->
+  <div class="flex items-center justify-between text-[11px] tracking-wider text-zinc-600">
+    <span>MEM: 64MB // RESILIENT MODE</span>
+    <span>STATUS: READY</span>
+  </div>
+</div>
+
+<style>
+  :global(html.booted) #splash-screen {
+    display: none !important;
+  }
+</style>
+
+<script>
+  import { animate } from "motion";
+
+  function initSplashScreen() {
+    const splash = document.getElementById("splash-screen");
+    if (!splash) return;
+
+    if (sessionStorage.getItem("portfolio_booted") === "true") {
+      document.documentElement.classList.add("booted");
+      splash.remove();
+      return;
+    }
+
+    const progressBar = document.getElementById("splash-progress-bar");
+    const percentage = document.getElementById("splash-percentage");
+    const statusText = document.getElementById("splash-status");
+
+    const steps = [
+      { pct: 30, text: "INITIALIZING ZERO-TRUST ENVIRONMENT..." },
+      { pct: 65, text: "LOADING DEFENSIVE COMPONENT TREE..." },
+      { pct: 90, text: "ESTABLISHING ENCRYPTED GATEWAY..." },
+      { pct: 100, text: "ALL SYSTEMS NOMINAL" },
+    ];
+
+    let currentStep = 0;
+    const interval = setInterval(() => {
+      if (currentStep < steps.length) {
+        const step = steps[currentStep];
+        if (progressBar) progressBar.style.width = `${step.pct}%`;
+        if (percentage) percentage.textContent = `${step.pct}%`;
+        if (statusText) statusText.textContent = step.text;
+        currentStep++;
+      } else {
+        clearInterval(interval);
+        setTimeout(() => {
+          // Scroll-up splash screen animation
+          animate(
+            splash,
+            {
+              y: ["0%", "-100%"],
+              opacity: [1, 0.95],
+            },
+            {
+              duration: 0.8,
+              ease: [0.65, 0, 0.35, 1],
+            }
+          ).finished.then(() => {
+            sessionStorage.setItem("portfolio_booted", "true");
+            document.documentElement.classList.add("booted");
+            document.dispatchEvent(new CustomEvent("splash-finished"));
+            splash.remove();
+          });
+        }, 120);
+      }
+    }, 160);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSplashScreen);
+  } else {
+    initSplashScreen();
+  }
+  document.addEventListener("astro:page-load", initSplashScreen);
+</script>

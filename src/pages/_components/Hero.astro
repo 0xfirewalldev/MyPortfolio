@@ -68,90 +68,70 @@ import { Icon } from "astro-icon/components";
 </section>
 
 <script>
-  import { gsap } from "gsap";
+  import { animate, stagger } from "motion";
 
   function initHeroAnimations() {
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const meta = document.querySelector("[data-hero-meta]");
-      const title = document.querySelector("[data-hero-title]");
-      const desc = document.querySelector("[data-hero-desc]");
-      const cta = document.querySelector("[data-hero-cta]");
-      const terminal = document.querySelector("[data-hero-terminal]");
-      const scroll = document.querySelector("[data-hero-scroll]");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const meta = document.querySelector<HTMLElement>("[data-hero-meta]");
+    const title = document.querySelector<HTMLElement>("[data-hero-title]");
+    const desc = document.querySelector<HTMLElement>("[data-hero-desc]");
+    const cta = document.querySelector<HTMLElement>("[data-hero-cta]");
+    const terminal = document.querySelector<HTMLElement>("[data-hero-terminal]");
+    const scroll = document.querySelector<HTMLElement>("[data-hero-scroll]");
 
+    const runEntrance = () => {
       if (meta) {
-        tl.from(meta, {
-          y: -12,
-          opacity: 0,
-          duration: 0.6,
-        });
+        animate(meta, { opacity: [0, 1], y: [-12, 0] }, { duration: 0.6, ease: [0.16, 1, 0.3, 1] });
       }
 
       if (title) {
-        tl.from(
+        animate(
           title,
-          {
-            y: 28,
-            opacity: 0,
-            duration: 0.8,
-          },
-          "-=0.4"
+          { opacity: [0, 1], y: [28, 0] },
+          { delay: 0.15, duration: 0.75, ease: [0.16, 1, 0.3, 1] }
         );
       }
 
       if (desc) {
-        tl.from(
+        animate(
           desc,
-          {
-            y: 18,
-            opacity: 0,
-            duration: 0.7,
-          },
-          "-=0.5"
+          { opacity: [0, 1], y: [18, 0] },
+          { delay: 0.28, duration: 0.7, ease: [0.16, 1, 0.3, 1] }
         );
       }
 
-      if (cta) {
-        tl.from(
-          cta.children,
-          {
-            y: 14,
-            opacity: 0,
-            duration: 0.6,
-            stagger: 0.12,
-            ease: "power2.out",
-          },
-          "-=0.4"
+      if (cta && cta.children.length > 0) {
+        animate(
+          Array.from(cta.children) as HTMLElement[],
+          { opacity: [0, 1], y: [14, 0] },
+          { delay: stagger(0.1, { start: 0.38 }), duration: 0.6, ease: [0.16, 1, 0.3, 1] }
         );
       }
 
       if (terminal) {
-        tl.from(
+        animate(
           terminal,
-          {
-            x: 32,
-            opacity: 0,
-            duration: 0.9,
-          },
-          "-=0.7"
+          { opacity: [0, 1], x: [32, 0] },
+          { delay: 0.3, duration: 0.85, ease: [0.16, 1, 0.3, 1] }
         );
       }
 
       if (scroll) {
-        tl.from(
+        animate(
           scroll,
-          {
-            y: 16,
-            opacity: 0,
-            duration: 0.8,
-          },
-          "-=0.4"
+          { opacity: [0, 1], y: [16, 0] },
+          { delay: 0.65, duration: 0.75, ease: [0.16, 1, 0.3, 1] }
         );
       }
-    });
+    };
+
+    const splash = document.getElementById("splash-screen");
+    if (splash && !sessionStorage.getItem("portfolio_booted")) {
+      document.addEventListener("splash-finished", runEntrance, { once: true });
+    } else {
+      runEntrance();
+    }
   }
 
   if (document.readyState === "loading") {

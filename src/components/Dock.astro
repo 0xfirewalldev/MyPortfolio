@@ -31,7 +31,7 @@ const items = [
 </nav>
 
 <script>
-  import { gsap } from "gsap";
+  import { animate } from "motion";
 
   function initDock() {
     const dock = document.querySelector<HTMLElement>("#dock");
@@ -47,7 +47,7 @@ const items = [
           if (targetEl) {
             e.preventDefault();
             targetEl.scrollIntoView({ behavior: "smooth" });
-            gsap.fromTo(el, { y: -8 }, { y: 0, duration: 0.4, ease: "bounce.out" });
+            animate(el, { y: [-8, 0] }, { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] });
           }
         }
       });
@@ -83,29 +83,23 @@ const items = [
       });
     }
 
-    // GPU-accelerated macOS dock magnification with smooth wave falloff
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.from(dock, {
-        y: 40,
-        opacity: 0,
-        duration: 0.75,
-        ease: "back.out(1.2)",
-        delay: 0.1,
-      });
-    });
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!prefersReduced) {
+      animate(
+        dock,
+        { y: [40, 0], opacity: [0, 1] },
+        { duration: 0.75, ease: [0.34, 1.56, 0.64, 1], delay: 0.1 }
+      );
+    }
 
-    mm.add("(hover: hover) and (prefers-reduced-motion: no-preference)", () => {
+    const canHover = window.matchMedia("(hover: hover)").matches;
+    if (canHover && !prefersReduced) {
       const MAX_SCALE = 1.45;
       const RANGE = 110;
-      const opts = { duration: 0.22, ease: "power2.out" };
-
-      const quickScale = items.map((el) => gsap.quickTo(el, "scale", opts));
-      const quickY = items.map((el) => gsap.quickTo(el, "y", opts));
 
       const onMove = (e: PointerEvent) => {
         const mouseX = e.clientX;
-        items.forEach((el, i) => {
+        items.forEach((el) => {
           const rect = el.getBoundingClientRect();
           const centerX = rect.left + rect.width / 2;
           const dist = Math.abs(mouseX - centerX);
@@ -114,30 +108,22 @@ const items = [
             const factor = Math.cos((dist / RANGE) * (Math.PI / 2));
             const scale = 1 + (MAX_SCALE - 1) * factor;
             const yLift = -8 * factor;
-            quickScale[i](scale);
-            quickY[i](yLift);
+            animate(el, { scale, y: yLift }, { duration: 0.16, ease: "easeOut" });
           } else {
-            quickScale[i](1);
-            quickY[i](0);
+            animate(el, { scale: 1, y: 0 }, { duration: 0.16, ease: "easeOut" });
           }
         });
       };
 
       const onLeave = () => {
-        items.forEach((_, i) => {
-          quickScale[i](1);
-          quickY[i](0);
+        items.forEach((el) => {
+          animate(el, { scale: 1, y: 0 }, { duration: 0.2, ease: "easeOut" });
         });
       };
 
       dock.addEventListener("pointermove", onMove);
       dock.addEventListener("pointerleave", onLeave);
-
-      return () => {
-        dock.removeEventListener("pointermove", onMove);
-        dock.removeEventListener("pointerleave", onLeave);
-      };
-    });
+    }
   }
 
   if (document.readyState === "loading") {

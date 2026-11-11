@@ -223,7 +223,7 @@ const channels = [
 </main>
 
 <script>
-  import { gsap } from "gsap";
+  import { animate } from "motion";
 
   function initContactPage() {
     // 1. Email copy interaction
@@ -251,47 +251,32 @@ const channels = [
       });
     }
 
-    // 2. GSAP Entrance Animation
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const header = document.querySelector("[data-contact-header]");
-      const leftCol = document.querySelector("[data-contact-left]");
-      const rightCol = document.querySelector("[data-contact-right]");
+    // 2. Motion Entrance Animation
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const header = document.querySelector<HTMLElement>("[data-contact-header]");
+    const leftCol = document.querySelector<HTMLElement>("[data-contact-left]");
+    const rightCol = document.querySelector<HTMLElement>("[data-contact-right]");
 
-      if (header) {
-        tl.from(header, {
-          y: -16,
-          opacity: 0,
-          duration: 0.6,
-        });
-      }
+    if (header) {
+      animate(header, { opacity: [0, 1], y: [-16, 0] }, { duration: 0.6, ease: [0.16, 1, 0.3, 1] });
+    }
 
-      if (leftCol) {
-        tl.from(
-          leftCol,
-          {
-            y: 28,
-            opacity: 0,
-            duration: 0.7,
-          },
-          "-=0.3"
-        );
-      }
+    if (leftCol) {
+      animate(
+        leftCol,
+        { opacity: [0, 1], y: [28, 0] },
+        { delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+      );
+    }
 
-      if (rightCol) {
-        tl.from(
-          rightCol,
-          {
-            y: 28,
-            opacity: 0,
-            duration: 0.7,
-          },
-          "-=0.5"
-        );
-      }
-    });
+    if (rightCol) {
+      animate(
+        rightCol,
+        { opacity: [0, 1], y: [28, 0] },
+        { delay: 0.35, duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+      );
+    }
   }
 
   if (document.readyState === "loading") {

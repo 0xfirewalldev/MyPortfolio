@@ -265,80 +265,32 @@ const arsenal = [
 </section>
 
 <script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
+  import { inView, animate } from "motion";
 
   function initWhoAmIAnimation() {
     const root = document.querySelector<HTMLElement>("#about");
     if (!root) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const cards = root.querySelectorAll<HTMLElement>("[data-bento-card]");
-      if (cards.length === 0) return;
+    const cards = root.querySelectorAll<HTMLElement>("[data-bento-card]");
+    if (cards.length === 0) return;
 
-      ScrollTrigger.batch(cards, {
-        start: "top 88%",
-        once: true,
-        onEnter: (batch) =>
-          gsap.fromTo(
-            batch,
-            { opacity: 0, y: 32 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              stagger: 0.12,
-              ease: "power3.out",
-            }
-          ),
-      });
-      ScrollTrigger.refresh();
-    });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initWhoAmIAnimation);
-  } else {
-    initWhoAmIAnimation();
-  }
-  document.addEventListener("astro:page-load", initWhoAmIAnimation);
-</script>
-
-<script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  function initWhoAmIAnimation() {
-    const root = document.querySelector<HTMLElement>("#about");
-    if (!root) return;
-
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const cards = root.querySelectorAll<HTMLElement>("[data-bento-card]");
-      if (cards.length === 0) return;
-
-      ScrollTrigger.batch(cards, {
-        start: "top 88%",
-        once: true,
-        onEnter: (batch) =>
-          gsap.fromTo(
-            batch,
-            { opacity: 0, y: 32 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              stagger: 0.12,
-              ease: "power3.out",
-            }
-          ),
-      });
-      ScrollTrigger.refresh();
+    cards.forEach((card) => {
+      // InView fade-in and fade-out animation
+      inView(
+        card,
+        () => {
+          animate(
+            card,
+            { opacity: [0, 1], y: [28, 0] },
+            { duration: 0.65, ease: [0.16, 1, 0.3, 1] }
+          );
+          return () => {
+            animate(card, { opacity: [1, 0.15], y: [0, 16] }, { duration: 0.45, ease: "easeOut" });
+          };
+        },
+        { margin: "-5% 0px -5% 0px" }
+      );
     });
   }
 
